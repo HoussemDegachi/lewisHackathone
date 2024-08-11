@@ -25,6 +25,9 @@ module.exports = {
       sm: "16px",
     },
     extend: {
+      colors: {
+        "editor": "#1e1e1e"
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
