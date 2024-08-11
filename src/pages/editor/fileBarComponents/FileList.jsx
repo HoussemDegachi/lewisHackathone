@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, FolderPlus, FilePlus2 } from "lucide-react";
 
 function createFileElement(file) {
-  return <div className="cursor-pointer pl-1.5">{file.name}</div>;
+  return (
+    <div className="cursor-pointer pl-1.5 rounded-sm hover:bg-gray-700">
+      {file.name}
+    </div>
+  );
 }
 
 function createFolderElement(folder) {
@@ -12,10 +16,20 @@ function createFolderElement(folder) {
     setOpen((state) => !state);
   };
   return (
-    <div onClick={toggleOpen} className="cursor-pointer">
-      <div className="flex items-center">
-        {open ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-        <span>{folder.name}</span>
+    <div onClick={toggleOpen} className="cursor-pointer rounded-sm">
+      <div className="flex items-center justify-between hover:bg-gray-700 group">
+        <div className="flex items-center">
+          {open ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+          <span>{folder.name}</span>
+        </div>
+        <div className="mr-1.5 flex gap-1.5 opacity-0 group-hover:opacity-100 duration-100">
+          <button>
+            <FilePlus2 size={16} className=" opacity-50 hover:opacity-100" />
+          </button>
+          <button>
+            <FolderPlus size={16} className=" opacity-50 hover:opacity-100" />
+          </button>
+        </div>
       </div>
       {open && (
         <div className="pl-2">
