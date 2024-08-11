@@ -77,6 +77,7 @@ function FileBar() {
         {/* Replace 'dummyDir' with actual data */}
         <FileList file={dummyDir} />
       </div>
+
     </div>
   );
 }
