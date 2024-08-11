@@ -17,7 +17,7 @@ function index() {
           <FileBar />
         </div>
       </ResizablePanel>
-      <ResizableHandle withHandle />
+      <ResizableHandle className={"bg-neutral-400"} />
       <ResizablePanel defaultSize={80}>
         <div className="h-full">
           <EditorSection />
