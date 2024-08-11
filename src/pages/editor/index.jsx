@@ -1,5 +1,5 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import FileBar from "./fileBar";
+import FileBar from "@/pages/editor/FileBar.jsx";
 function index() {
   return (
     <ResizablePanelGroup direction="horizontal" className="w-full min-h-[100dvh] max-h-[100dvh]">

@@ -1,5 +1,5 @@
 import React from "react";
-import SavePageButton from "@/components/ui/saveButton";
+import SavePageButton from "@/components/ui/saveButton.jsx";
 
 function FileBar() {
   return (
