@@ -3,7 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.jsx";
-import FileBar from "./fileBar.jsx";
+import FileBar from "./FileBar.jsx";
 import EditorSection from "./EditorSection.jsx";
 
 function index() {
