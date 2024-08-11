@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 
+// initial values for context
 const initialContext = {
     errors: [],
     broken: false,
@@ -9,8 +10,9 @@ const initialContext = {
     setMoveCode: () => {}
 }
 
+
 const EditorDataContext = createContext(initialContext);
-export const useDataProvider = () => useContext(EditorDataContext)
+export const useEditorDataProvider = () => useContext(EditorDataContext)
 
 export function EditorDataProvider({ children }) {
     const [errors, setErrors] = useState([]);

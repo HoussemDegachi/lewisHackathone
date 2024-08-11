@@ -1,6 +1,6 @@
 import React from 'react'
-import EditorBox from './EditorBox'
-import FilePathDisplay from './FilePathDisplay'
+import EditorBox from './EditorSectionComponents/EditorBox.jsx'
+import FilePathDisplay from './EditorSectionComponents/FilePathDisplay.jsx'
 
 function EditorSection() {
   return (
