@@ -2,9 +2,9 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import FileBar from "./fileBar";
-import EditorSection from "./EditorSection";
+} from "@/components/ui/resizable.jsx";
+import FileBar from "./fileBar.jsx";
+import EditorSection from "./EditorSection.jsx";
 
 function index() {
   return (
