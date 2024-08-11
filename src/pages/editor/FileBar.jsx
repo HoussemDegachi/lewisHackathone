@@ -1,15 +1,85 @@
-import React from 'react'
+import React from "react";
+import FileList from "./fileBarComponents/FileList";
+
+//Dummy data
+const dummyDir = {
+  type: "folder",
+  name: "lewis",
+  contents: [
+    {
+      type: "folder",
+      name: "node_modules",
+      contents: [
+        {
+          type: "folder",
+          name: "node_modules",
+        },
+        {
+          type: "folder",
+          name: "src",
+        },
+        {
+          type: "file",
+          name: ".gitignore",
+        },
+      ],
+    },
+    {
+      type: "folder",
+      name: "src",
+      contents: [
+        {
+          type: "file",
+          name: "index",
+        },
+        {
+          type: "file",
+          name: "main",
+        },
+        {
+          type: "file",
+          name: "item",
+        },
+        {
+          type: "file",
+          name: "list",
+        },
+        {
+          type: "file",
+          name: "readme",
+        },
+      ],
+    },
+    {
+      type: "file",
+      name: ".gitignore",
+    },
+    {
+      type: "file",
+      name: "components",
+    },
+    {
+      type: "file",
+      name: "eslint.config",
+    },
+    {
+      type: "file",
+      name: "index",
+    },
+  ],
+};
 
 function FileBar() {
   return (
-    <div className='bg-[#505050] w-full h-full'>
-        fileBar must be here <br/>
-        (Bright)<br/>
-        Check out shadcn ui they have alot of components that might help you<br/>
-        (to install any component you will find a one command in its page)<br/>
-        src/pages/editor/FileBar.jsx
+    <div className="bg-gray-900 w-full h-full flex flex-col text-white">
+      <h2 className="border-gray-700 font-medium border-b-2 p-1.5">EXPLORER</h2>
+      <div className="p-1">
+        {/* Replace 'dummyDir' with actual data */}
+        <FileList file={dummyDir} />
+      </div>
+
     </div>
-  )
+  );
 }
 
-export default FileBar
+export default FileBar;
