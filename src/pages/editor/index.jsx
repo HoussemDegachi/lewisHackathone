@@ -1,16 +1,8 @@
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import FileBar from "./fileBar";
-
 function index() {
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className="w-full min-h-[100dvh] max-h-[100dvh]"
-    >
+    <ResizablePanelGroup direction="horizontal" className="w-full min-h-[100dvh] max-h-[100dvh]">
       <ResizablePanel defaultSize={20}>
         <div className="h-full">
           <FileBar />
