@@ -4,6 +4,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import FileBar from "./fileBar";
+import EditorSection from "./EditorSection";
 
 function index() {
   return (
@@ -19,7 +20,7 @@ function index() {
       <ResizableHandle withHandle />
       <ResizablePanel defaultSize={80}>
         <div className="h-full">
-          <span className="font-semibold">Content</span>
+          <EditorSection />
         </div>
       </ResizablePanel>
     </ResizablePanelGroup>
