@@ -5,7 +5,7 @@ import EditorSection from "./EditorSection.jsx";
 function index() {
   return (
     // create a resizable panel with two sides
-    <ResizablePanelGroup direction="horizontal" className="w-full min-h-[100dvh] max-h-[100dvh] caret-green selection:bg-magenta selection:text-white">
+    <ResizablePanelGroup direction="horizontal" className="w-full min-h-[100dvh] max-h-[100dvh] ">
       {/* small side is for file bar */}
       <ResizablePanel defaultSize={20}>
         <div className="h-full">
