@@ -12,24 +12,39 @@ function Folder({ folder }) {
     setOpen((state) => !state);
   };
 
+  const addNewFolder = (e) => {
+    e.stopPropagation();
+    createFile("folder", folder.id);
+  };
+
   const addNewFile = (e) => {
     e.stopPropagation();
-    createFile("batman", "folder", folder.id);
+    createFile("file", folder.id);
   };
 
   return (
     <div onClick={toggleOpen} className="cursor-pointer rounded-sm">
       <div className="flex items-center justify-between hover:bg-gray-700 group">
-        <div className="flex items-center gap-0.5">
-          {open ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+        <div className="flex items-center gap-0.5 whitespace-nowrap overflow-hidden">
+          <div className="flex-1">
+            {open ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+          </div>
           <span>{folder.name}</span>
         </div>
-        <div className="mr-1.5 flex gap-1.5 opacity-0 group-hover:opacity-100 duration-100">
+        <div className="mx-1 flex gap-1.5 opacity-0 group-hover:opacity-100 duration-100">
           <button>
-            <FilePlus2 size={16} className="opacity-50 hover:opacity-100" />
+            <FilePlus2
+              size={16}
+              onClick={addNewFile}
+              className="opacity-50 hover:opacity-100"
+            />
           </button>
           <button>
-            <FolderPlus size={16} className="opacity-50 hover:opacity-100" />
+            <FolderPlus
+              size={16}
+              onClick={addNewFolder}
+              className="opacity-50 hover:opacity-100"
+            />
           </button>
         </div>
       </div>

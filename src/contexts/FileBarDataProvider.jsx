@@ -18,7 +18,7 @@ export function FileBarDataProvider({ children }) {
 
   const createFile = (type, folderId) => {
     const newObj = {
-      name: `untitled folder ${type}`,
+      name: `untitled ${type}`,
       type,
       id: uuid(),
       contents: [],
