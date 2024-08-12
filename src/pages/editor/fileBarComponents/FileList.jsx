@@ -1,16 +1,10 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight, FolderPlus, FilePlus2 } from "lucide-react";
-import { Link } from "react-router-dom";
 
 function createFileElement(file) {
   return (
     <div className="cursor-pointer pl-1.5 rounded-sm hover:bg-gray-700">
-      {/* 
-        File.name must be changed later to file.id
-      */}
-      <Link to={`/${file.name}`} className="w-full">
       {file.name}
-      </Link>
     </div>
   );
 }
