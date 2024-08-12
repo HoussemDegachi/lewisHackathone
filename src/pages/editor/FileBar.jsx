@@ -71,8 +71,12 @@ const dummyDir = {
 function FileBar() {
   return (
     <div className="bg-gray-900 w-full h-full flex flex-col text-white">
+<<<<<<< HEAD
       <h2 className="border-gray-700 font-medium border-b-2 p-1.5">EXPLORER</h2>
       <SavePageButton />
+=======
+      <h2 className="border-gray-700 text-2xs border-b-2 px-5 py-2">EXPLORER</h2>
+>>>>>>> d5d3209aee244af7e827e380206b4ce34cfae86e
       <div className="p-1">
         {/* Replace 'dummyDir' with actual data */}
         <FileList file={dummyDir} />
