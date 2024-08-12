@@ -7,7 +7,7 @@ import BrokenEditorLine from "./BrokenEditorLine.jsx";
 function EditorBox({ data, dataId }) {
   const { setErrors, errors, moveCode } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
-  // wasBroken gurantess that editor can brake only once per session (unless you refresh)
+  // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
   const [solvedLines, setSolvedLines] = useState([])
   const [lines, setLines] = useState([]);
@@ -37,9 +37,10 @@ function EditorBox({ data, dataId }) {
   const maxMistakes = 5;
   useEffect(() => {
     const linesElems = document.querySelectorAll(".view-line");
-    if (errors.length >= maxMistakes && !wasBroken) {
+    if (errors.length >= maxMistakes && !wasBroken && !isBroken) {
       // get all lines of code
 
+      setIsBroken(true);
       const arrElemes = [];
       linesElems.forEach((lineElem) => {
         // hide them
@@ -47,10 +48,9 @@ function EditorBox({ data, dataId }) {
         arrElemes.push(lineElem);
       });
       
-      setIsBroken(true);
       setLines(arrElemes);
     }
-  }, [errors]);
+  }, [errors, wasBroken]);
 
 
   // when a user clicks on a broken line pieace
@@ -68,8 +68,14 @@ function EditorBox({ data, dataId }) {
     {
       setIsBroken(false);
       setWasBroken(true);
+      setSolvedLines([])
+      // allows editor to break again after 30s
+      // if needed
+      setTimeout(() => {
+        
+        setWasBroken(false)
+      }, 30000)
     }
-
   }, [solvedLines])
 
 
@@ -87,7 +93,7 @@ function EditorBox({ data, dataId }) {
       />
 
       {isBroken && (
-        <div className="absolute top-0 right-0 h-full w-full">
+        <div className="absolute top-0 right-0 h-full w-full overflow-scroll py-6 backdrop-blur-sm">
           {lines.map((line, i) => (
             <BrokenEditorLine text={line.innerText} onClick={() => handleOnBrokenClick(i, line)} className={`${solvedLines.includes(i) && "hidden"}`} key={i} />
           ))}

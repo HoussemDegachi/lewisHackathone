@@ -42,16 +42,16 @@ module.exports = {
         },
         "space-float": {
           '0%, 100%': {
-            transform: "translate(0, 0) rotate(360deg)",
+            transform: "translate(0, 0) rotate(0deg)",
           },
           '25%': {
-            transform: "translateY(5%, 15%) rotate(360deg)",
+            transform: "translate(100%, 90%) rotate(20deg)",
           },
           '50%': {
-            transform: "translateY(10%, 5%) rotate(360deg)",
+            transform: "translate(60%, 50%) rotate(0deg)",
           },
           '75%': {
-            transform: "translateY(0%, 15%) rotate(360deg)",
+            transform: "translate(20%, 90%) rotate(-20deg)",
           }
         }
       },
