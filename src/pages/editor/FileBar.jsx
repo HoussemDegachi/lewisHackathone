@@ -1,5 +1,5 @@
 import FileList from "./fileBarComponents/FileList";
-
+import SavePageButton from "@/components/ui/saveButton";
 //Dummy data
 const dummyDir = {
   type: "folder",
@@ -72,6 +72,7 @@ function FileBar() {
   return (
     <div className="bg-gray-900 w-full h-full flex flex-col text-white">
       <h2 className="border-gray-700 font-medium border-b-2 p-1.5">EXPLORER</h2>
+      <SavePageButton />
       <div className="p-1">
         {/* Replace 'dummyDir' with actual data */}
         <FileList file={dummyDir} />
