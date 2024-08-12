@@ -45,10 +45,10 @@ module.exports = {
             transform: "translate(0, 0) rotate(0deg)",
           },
           '25%': {
-            transform: "translate(100%, 90%) rotate(20deg)",
+            transform: "translate(60%, 60%) rotate(20deg)",
           },
           '50%': {
-            transform: "translate(60%, 50%) rotate(0deg)",
+            transform: "translate(40%, 50%) rotate(0deg)",
           },
           '75%': {
             transform: "translate(20%, 90%) rotate(-20deg)",
@@ -58,7 +58,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "space-float": "space-float 10s infinite ease-in-out"
+        "space-float": "space-float 20s infinite ease-in-out"
       },
     },
   },
