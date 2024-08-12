@@ -5,6 +5,7 @@ import {
 } from "@/components/ui/resizable.jsx";
 import FileBar from "./FileBar.jsx";
 import EditorSection from "./EditorSection.jsx";
+import { FileBarDataProvider } from "@/contexts/FileBarDataProvider.jsx";
 
 function index() {
   return (
@@ -16,7 +17,9 @@ function index() {
       {/* small side is for file bar */}
       <ResizablePanel defaultSize={20}>
         <div className="h-full">
-          <FileBar />
+          <FileBarDataProvider>
+            <FileBar />
+          </FileBarDataProvider>
         </div>
       </ResizablePanel>
       <ResizableHandle className={"bg-neutral-400"} />
