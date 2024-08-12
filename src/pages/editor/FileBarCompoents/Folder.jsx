@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronRight, FolderPlus, FilePlus2 } from "lucide-react";
+import FileList from "./FileList";
 
 function Folder({ folder }) {
   const [open, setOpen] = useState(false);

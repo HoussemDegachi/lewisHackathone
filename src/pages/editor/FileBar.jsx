@@ -1,50 +1,61 @@
 import React from "react";
-import FileList from "./fileBarComponents/FileList";
+import FileList from "./FileBarCompoents/FileList";
 
 //Dummy data
 const dummyDir = {
   type: "folder",
   name: "lewis",
+  id: "lewis",
   contents: [
     {
       type: "folder",
       name: "node_modules",
+      id: "123",
       contents: [
         {
           type: "folder",
           name: "node_modules",
+          id: "123",
         },
         {
           type: "folder",
           name: "src",
+          id: "123",
         },
         {
           type: "file",
           name: ".gitignore",
+          id: "123",
         },
       ],
     },
     {
       type: "folder",
       name: "src",
+      id: "123",
       contents: [
         {
           type: "file",
+          id: "123",
           name: "index",
         },
         {
           type: "file",
           name: "main",
+          id: "123",
         },
         {
           type: "file",
+          id: "123",
           name: "item",
         },
         {
           type: "file",
+          id: "123",
           name: "list",
         },
         {
+          id: "123",
           type: "file",
           name: "readme",
         },
@@ -52,18 +63,22 @@ const dummyDir = {
     },
     {
       type: "file",
+      id: "123",
       name: ".gitignore",
     },
     {
       type: "file",
+      id: "123",
       name: "components",
     },
     {
       type: "file",
+      id: "123",
       name: "eslint.config",
     },
     {
       type: "file",
+      id: "123",
       name: "index",
     },
   ],
