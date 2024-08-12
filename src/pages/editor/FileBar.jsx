@@ -1,4 +1,3 @@
-import React from "react";
 import FileList from "./fileBarComponents/FileList";
 
 //Dummy data
@@ -77,7 +76,6 @@ function FileBar() {
         {/* Replace 'dummyDir' with actual data */}
         <FileList file={dummyDir} />
       </div>
-
     </div>
   );
 }
