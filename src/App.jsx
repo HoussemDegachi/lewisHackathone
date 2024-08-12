@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path={"/:fileName"} element={<Editor />} />
+        <Route path={"/:fileId"} element={<Editor />} />
       </Routes>
     </Router>
   )
