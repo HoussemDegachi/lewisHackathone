@@ -4,10 +4,12 @@ import Folder from "./Folder";
 import RenameFile from "./RenameFile";
 
 function FileList({ file }) {
-  if (file.type === "file") return <File file={file} />;
-  if (file.type === "folder") return <Folder folder={file} />;
-  if (file.type === "rename") return <RenameFile item={file} />;
-  return null;
+  let item = null;
+  if (file.type === "file") item = <File file={file} />;
+  if (file.type === "folder") item = <Folder folder={file} />;
+  if (file.type === "rename") item = <RenameFile item={file} />;
+
+  return item;
 }
 
 export default FileList;

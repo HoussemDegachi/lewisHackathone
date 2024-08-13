@@ -1,8 +1,8 @@
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 import React, { useEffect, useRef, useState } from "react";
 
-function RenameFile({ item, defaultVal = "" }) {
-  const [name, setName] = useState(defaultVal);
+function RenameFile({ item }) {
+  const [name, setName] = useState(item.name || "");
   const { updateFile, deleteFile } = useFileBarDataProvider();
   const ref = useRef(null);
 
@@ -13,11 +13,14 @@ function RenameFile({ item, defaultVal = "" }) {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      deleteFile(item.id);
-    };
-  }, []);
+  // useEffect(() => {
+  //   console.log(name);
+
+  //   return () => {
+  //     console.log(name);
+  //     // deleteFile(item.id);
+  //   };
+  // });
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutSide);
@@ -34,7 +37,8 @@ function RenameFile({ item, defaultVal = "" }) {
         value={name}
         ref={ref}
         onChange={handleChange}
-        className="bg-slate-700 outline-none w-full px-1 ring-2"
+        autoFocus
+        className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
       />
     </div>
   );
