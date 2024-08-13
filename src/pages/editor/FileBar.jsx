@@ -1,83 +1,18 @@
-import React from "react";
-import FileList from "./fileBarComponents/FileList";
 
-//Dummy data
-const dummyDir = {
-  type: "folder",
-  name: "lewis",
-  contents: [
-    {
-      type: "folder",
-      name: "node_modules",
-      contents: [
-        {
-          type: "folder",
-          name: "node_modules",
-        },
-        {
-          type: "folder",
-          name: "src",
-        },
-        {
-          type: "file",
-          name: ".gitignore",
-        },
-      ],
-    },
-    {
-      type: "folder",
-      name: "src",
-      contents: [
-        {
-          type: "file",
-          name: "index",
-        },
-        {
-          type: "file",
-          name: "main",
-        },
-        {
-          type: "file",
-          name: "item",
-        },
-        {
-          type: "file",
-          name: "list",
-        },
-        {
-          type: "file",
-          name: "readme",
-        },
-      ],
-    },
-    {
-      type: "file",
-      name: ".gitignore",
-    },
-    {
-      type: "file",
-      name: "components",
-    },
-    {
-      type: "file",
-      name: "eslint.config",
-    },
-    {
-      type: "file",
-      name: "index",
-    },
-  ],
-};
+import React from "react";
+import FileList from "./FileBarCompoents/FileList";
+import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
+import SavePageButton from "@/components/ui/saveButton";
 
 function FileBar() {
+  const { directory } = useFileBarDataProvider();
+
   return (
     <div className="bg-gray-900 w-full h-full flex flex-col text-white">
-      <h2 className="border-gray-700 text-2xs border-b-2 px-5 py-2">EXPLORER</h2>
-      <div className="p-1">
-        {/* Replace 'dummyDir' with actual data */}
-        <FileList file={dummyDir} />
+      <h2 className="border-gray-700 font-medium border-b-2 p-1.5">EXPLORER</h2>
+      <div className="p-1 select-none">
+        <FileList file={directory} />
       </div>
-
     </div>
   );
 }
