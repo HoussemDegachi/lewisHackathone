@@ -18,10 +18,10 @@ export function FileBarDataProvider({ children }) {
 
   const createFile = (type, folderId) => {
     const newObj = {
-      name: `untitled ${type}`,
-      type,
+      name: "untitled",
+      type: "rename",
+      toBeType: type,
       id: uuid(),
-      contents: [],
     };
     if (type === "folder") newObj.contents = [];
 
@@ -41,8 +41,19 @@ export function FileBarDataProvider({ children }) {
     setDirectory({ ...addFile(directory, folderId, newObj) });
   };
 
+  const updateFile = (fileId, data) => {
+    function updateObj(obj, objId, data) {
+      if (obj.id === objId) for (let key in data) obj[key] = data[key];
+
+      if (obj.contents)
+        for (const content of obj.contents) updateObj(content, objId, data);
+      return obj;
+    }
+    setDirectory({ ...updateObj(directory, fileId, data) });
+  };
+
   return (
-    <FileBarDataContext.Provider value={{ directory, createFile }}>
+    <FileBarDataContext.Provider value={{ directory, createFile, updateFile }}>
       {children}
     </FileBarDataContext.Provider>
   );

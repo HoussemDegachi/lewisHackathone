@@ -4,7 +4,7 @@ import FileList from "./FileList";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 
 function Folder({ folder }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const { createFile } = useFileBarDataProvider();
 
   const toggleOpen = (e) => {
@@ -14,11 +14,13 @@ function Folder({ folder }) {
 
   const addNewFolder = (e) => {
     e.stopPropagation();
+    setOpen(true);
     createFile("folder", folder.id);
   };
 
   const addNewFile = (e) => {
     e.stopPropagation();
+    setOpen(true);
     createFile("file", folder.id);
   };
 
@@ -49,7 +51,7 @@ function Folder({ folder }) {
         </div>
       </div>
       {open && (
-        <div className="pl-2">
+        <div className="pl-3">
           {folder?.contents?.map((file) => (
             <FileList file={file} key={file.id} />
           ))}
