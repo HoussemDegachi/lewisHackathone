@@ -63,6 +63,7 @@ function RenameFile({ item }) {
         onChange={handleChange}
         className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
       />
+      </form>
     </div>
   );
 }
