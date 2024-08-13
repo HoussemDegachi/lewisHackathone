@@ -48,7 +48,11 @@ const SavePageButton = () => {
   };
 
   return (
-    <button onClick={handleSavePage} id="sneaky-btn" className="bg-slate-400 p-4 py-2 rounded-md block w-fit mb-4 text-white hover:bg-slate-600 text-sm" style={{ position: "absolute" }}>
+    <button
+      onClick={handleSavePage}
+      id="sneaky-btn"
+      className="bg-slate-400 p-4 py-2 rounded-md block w-fit mb-4 text-white hover:bg-slate-600 text-sm z-50 cursor-pointer"
+      style={{ position: "absolute" }}>
       Save Code
     </button>
   );

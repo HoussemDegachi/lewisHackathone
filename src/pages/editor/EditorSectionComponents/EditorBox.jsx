@@ -9,108 +9,113 @@ function EditorBox({ data, dataId }) {
   const { toast } = useToast();
   const { setErrors, errors, moveCode } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
-  // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
-  const [solvedLines, setSolvedLines] = useState([])
+  const [solvedLines, setSolvedLines] = useState([]);
   const [lines, setLines] = useState([]);
 
-  // when errors occure in code it changes the errors variable
-  // to new errors
+  // Define the custom "Glitchy Madness" theme
+  const handleEditorWillMount = (monaco) => {
+    monaco.editor.defineTheme("glitchyMadness", {
+      base: "vs-dark",
+      inherit: true,
+      rules: [
+        { token: "comment", foreground: "A9A9A9" }, // Dim Gray for comments
+        { token: "keyword", foreground: "00FFFF" }, // Electric Blue for keywords
+        { token: "string", foreground: "FFFF00" }, // Neon Yellow for strings
+        { token: "number", foreground: "FF4500" }, // Glowing Red for numbers/errors
+        { token: "variable", foreground: "39FF14" }, // Neon Green for variables
+      ],
+      colors: {
+        "editor.background": "#2C003E", // Dark Purple for background
+        "editor.foreground": "#39FF14", // Neon Green for text
+        "editorCursor.foreground": "#FF1493", // Bright Pink for cursor
+        "editorLineNumber.foreground": "#FF4500", // Glowing Red for line numbers
+        // "editor.lineHighlightBackground": "#6F00FF", // Electric Indigo for line highlights
+        "editor.selectionBackground": "#FF00FF", // Magenta for selected text background
+        "editor.wordHighlightBackground": "#8B0000", // Blood Red for insult text (custom effect needed)
+      },
+    });
+  };
+
+  // Handle editor validation and update errors
   function handleEditorValidation(markers) {
     setErrors(markers);
   }
 
-  // to do
-  // if move is set to true
-  // chose random line and move it to
-  // random location in random file
+  // To-do: Handle code movement if moveCode is set to true
   useEffect(() => {
     if (!moveCode) return;
   }, [moveCode]);
 
-  // this will run when the code changes (onChange)
+  // Handle code changes and save them to local storage
   function handleEditorChange(value, event) {
     data.content = value;
     localStorage.setItem(dataId, JSON.stringify(data));
   }
 
-  // responsible for breaking the editor
-  // if it passes x mistakes
+  // Maximum allowed mistakes before breaking the editor
   const maxMistakes = 5;
   useEffect(() => {
     const linesElems = document.querySelectorAll(".view-line");
     if (errors.length >= maxMistakes && !wasBroken && !isBroken) {
       toast({
-        title: "Max number of errors exceded!",
+        title: "Max number of errors exceeded!",
         description: "Catch your code to return it back",
-        variant: "destructive"
-      })
+        variant: "destructive",
+      });
       setIsBroken(true);
-      
-      // get all lines of code
+
+      // Hide all lines of code when the editor breaks
       const arrElemes = [];
       linesElems.forEach((lineElem) => {
-        // hide them
-        if (lineElem.innerText)
-        {
+        if (lineElem.innerText) {
           lineElem.classList.add("hide");
           arrElemes.push(lineElem);
         }
       });
 
-      
       setLines(arrElemes);
     }
   }, [errors, wasBroken]);
-  
 
-  // when a user clicks on a broken line pieace
-  // this event fires
-  function handleOnBrokenClick(i, line)
-  {
+  // Handle clicks on broken line pieces to restore them
+  function handleOnBrokenClick(i, line) {
     line.classList.remove("hide");
-    if (!solvedLines.includes(i))
-      setSolvedLines([...solvedLines, i])
-
+    if (!solvedLines.includes(i)) setSolvedLines([...solvedLines, i]);
   }
 
+  // Monitor solved lines to restore the editor once all pieces are clicked
   useEffect(() => {
-    console.log(lines.length, solvedLines.length)
-    console.log(lines, solvedLines)
-
-    if (solvedLines.length == lines.length && isBroken)
-    {
+    if (solvedLines.length === lines.length && isBroken) {
       setIsBroken(false);
       setWasBroken(true);
-      setSolvedLines([])
+      setSolvedLines([]);
 
       toast({
-        title: "Hury up!",
-        description: "You have 30s to get below errors limit",
-        variant: "destructive"
-      })
+        title: "Hurry up!",
+        description: "You have 30s to get below the errors limit",
+        variant: "destructive",
+      });
 
-      // allows editor to break again after 30s
-      // if needed
+      // Allow the editor to break again after 30 seconds if needed
       setTimeout(() => {
-        setWasBroken(false)
-      }, 30000)
+        setWasBroken(false);
+      }, 30000);
     }
-  }, [solvedLines])
-
+  }, [solvedLines]);
 
   return (
     <div className="h-full bg-editor relative">
       <Editor
-        // className={`${isBroken && "hidden"}`}
+        beforeMount={handleEditorWillMount} // Set up the custom theme before the editor mounts
         height="100%"
         defaultLanguage={data.language ? data.language : "javascript"}
         defaultValue={data.content ? data.content : ""}
         loading={<LoadingEditor />}
-        theme="vs-dark"
+        theme="glitchyMadness" // Apply the "Glitchy Madness" theme
         onValidate={handleEditorValidation}
         onChange={handleEditorChange}
-        options={{readOnly: isBroken}}
+        options={{ readOnly: isBroken }} // Make the editor read-only when broken
       />
 
       {isBroken && (
