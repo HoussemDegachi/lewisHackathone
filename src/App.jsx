@@ -8,7 +8,8 @@ function App() {
     <Router>
       <Toaster />
       <Routes>
-        <Route path={"/:fileId"} element={<Editor />} />
+        <Route path={'/'} element={<Editor isRoot={true} />} />
+        <Route path={"/:fileId"} element={<Editor isRoot={false} />} />
       </Routes>
     </Router>
   )
