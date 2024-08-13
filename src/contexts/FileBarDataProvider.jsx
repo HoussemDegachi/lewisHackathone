@@ -52,8 +52,21 @@ export function FileBarDataProvider({ children }) {
     setDirectory({ ...updateObj(directory, fileId, data) });
   };
 
+  const deleteFile = (fileId) => {
+    function deletObj(obj, objId) {
+      if (obj.contents)
+        obj.contents = obj.contents.filter((content) => content.id !== objId);
+      if (obj.contents)
+        for (const content of obj.contents) deletObj(content, objId);
+      return obj;
+    }
+    setDirectory({ ...deletObj(directory, fileId) });
+  };
+
   return (
-    <FileBarDataContext.Provider value={{ directory, createFile, updateFile }}>
+    <FileBarDataContext.Provider
+      value={{ directory, createFile, updateFile, deleteFile }}
+    >
       {children}
     </FileBarDataContext.Provider>
   );

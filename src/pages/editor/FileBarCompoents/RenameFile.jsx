@@ -3,14 +3,21 @@ import React, { useEffect, useRef, useState } from "react";
 
 function RenameFile({ item, defaultVal = "" }) {
   const [name, setName] = useState(defaultVal);
-  const { updateFile } = useFileBarDataProvider();
+  const { updateFile, deleteFile } = useFileBarDataProvider();
   const ref = useRef(null);
 
   const handleClickOutSide = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       if (name) updateFile(item.id, { name, type: item.toBeType });
+      else deleteFile(item.id);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      deleteFile(item.id);
+    };
+  }, []);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutSide);
