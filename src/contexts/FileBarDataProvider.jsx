@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { createContext, useContext, useEffect, useState } from "react";
-// const { createContext, useContext, useState, useEffect } = require("react");
+import { addFileToDir } from "@/lib/directoryOps";
 
 const FileBarDataContext = createContext();
 
@@ -11,67 +11,42 @@ export function FileBarDataProvider({ children }) {
     JSON.parse(localStorage.getItem("directory")) || {
       id: uuid(),
       type: "folder",
-      name: "untitled folder",
+      name: "untitled project",
       contents: [],
     }
   );
 
   useEffect(() => {
-    localStorage.setItem("directory", JSON.stringify(directory))
-  }, [directory])
+    localStorage.setItem("directory", JSON.stringify(directory));
+  }, [directory]);
 
   const createFile = (type, folderId) => {
     const newObj = {
       name: null,
       type: "rename",
-      path: "",
       toBeType: type,
+      path: "",
       id: uuid(),
     };
+
     if (type === "folder") newObj.contents = [];
-    else if (type === "file") {
+
+    setDirectory({ ...addFileToDir(directory, folderId, newObj) });
+    console.log(newObj);
+
+    if (type === "file") {
       const fileInfo = {
         content: "",
-        path: "",
+        path: newObj.path,
         language: "",
       };
-      localStorage.setItem(newObj.id, JSON.stringify(fileInfo));
+      localStorage.setItem(
+        newObj.id,
+        JSON.stringify({
+          fileInfo,
+        })
+      );
     }
-
-    let path = "";
-    function addFile(directory, folderId, newObj) {
-      if (directory.type === "file") return directory;
-
-      if (directory.type === "folder") {
-        if (!path) path = directory.name;
-        else path += `/${directory.name}`;
-
-        if (directory.id === folderId) {
-          newObj.path = path + `${path ? "/" : ""}${newObj.name}`;
-          if (type == "file") {
-            const fileData = {
-              content: "",
-              languge: "",
-              path: newObj.path,
-            };
-
-            localStorage.setItem(newObj.id, JSON.stringify(fileData));
-          }
-
-          directory.contents.push(newObj);
-          return directory;
-        }
-      }
-      for (const content of directory.contents) {
-        addFile(content, folderId, newObj);
-        path = path.split("/")
-        path.pop()
-        path = path.join("/")
-      }
-      return directory;
-    }
-
-    setDirectory({ ...addFile(directory, folderId, newObj) });
   };
 
   const updateFile = (fileId, data) => {
@@ -101,9 +76,9 @@ export function FileBarDataProvider({ children }) {
       if (obj.contents)
         for (const content of obj.contents) {
           updateObj(content, objId, data);
-          path = path.split("/")
-          path.pop()
-          path = path.join("/")
+          path = path.split("/");
+          path.pop();
+          path = path.join("/");
         }
       return obj;
     }

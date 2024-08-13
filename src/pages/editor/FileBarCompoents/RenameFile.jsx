@@ -9,31 +9,20 @@ function RenameFile({ item }) {
   const ref = useRef(null);
 
   const saveChanges = () => {
-          if (name) updateFile(item.id, { name, type: item.toBeType });
-      else if (item.name)
-        updateFile(item.id, { name: item.name, type: item.toBeType });
-      else deleteFile(item.id);
-  }
+    if (name) updateFile(item.id, { name, type: item.toBeType });
+    else if (item.name)
+      updateFile(item.id, { name: item.name, type: item.toBeType });
+    else deleteFile(item.id);
+  };
 
   const handleClickOutSide = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      saveChanges()
-
-  useEffect(() => {
-    if (ref.current) ref.current.focus();
-  }, []);
-
-
+      saveChanges();
+      useEffect(() => {
+        if (ref.current) ref.current.focus();
+      }, []);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(name);
-  //   return () => {
-  //     console.log(name);
-  //     // deleteFile(item.id);
-  //   };
-  // });
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutSide);
@@ -42,27 +31,22 @@ function RenameFile({ item }) {
     };
   });
 
-  useEffect(() => {
-    return () => {
-      console.log(name)
-    }
-  }, [name])
-
   const handleChange = (e) => setName(e.target.value);
   const handleSubmit = (e) => {
-    e.preventDefault()
-    saveChanges()
-  }
+    e.preventDefault();
+    saveChanges();
+  };
 
   return (
     <div className="w-full" onClick={(e) => e.stopPropagation()}>
       <form onSubmit={handleSubmit}>
-      <input
-        value={name}
-        ref={ref}
-        onChange={handleChange}
-        className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
-      />
+        <input
+          value={name}
+          ref={ref}
+          onChange={handleChange}
+          autoFocus
+          className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
+        />
       </form>
     </div>
   );
