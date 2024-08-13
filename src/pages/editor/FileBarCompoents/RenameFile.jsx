@@ -34,7 +34,7 @@ function RenameFile({ item, defaultVal = "" }) {
         value={name}
         ref={ref}
         onChange={handleChange}
-        className="bg-gray-700 outline-none w-full px-1 ring-2"
+        className="bg-slate-700 outline-none w-full px-1 ring-2"
       />
     </div>
   );
