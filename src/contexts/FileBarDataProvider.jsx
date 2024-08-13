@@ -18,7 +18,7 @@ export function FileBarDataProvider({ children }) {
 
   const createFile = (type, folderId) => {
     const newObj = {
-      name: "untitled",
+      name: null,
       type: "rename",
       toBeType: type,
       id: uuid(),
