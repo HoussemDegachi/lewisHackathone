@@ -5,6 +5,7 @@ import NoFile from "./EditorSectionComponents/NoFile.jsx";
 
 
 function index({ isRoot }) {
+
   return (
     // create a resizable panel with two sides
     <ResizablePanelGroup
