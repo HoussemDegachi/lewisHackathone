@@ -15,6 +15,9 @@
   .hide {
     @apply hidden;
   }
+  .broken-line {
+    @apply text-white text-base font-light px-2 w-max flex items-center justify-center min-w-[150px] rounded-sm bg-neutral-600 mb-2 opacity-75 backdrop-blur-2xl cursor-pointer;
+  }
 }
 
 @font-face {

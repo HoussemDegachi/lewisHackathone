@@ -6,13 +6,11 @@ import BrokenEditorLine from "./BrokenEditorLine.jsx";
 import { useToast } from "@/components/ui/use-toast.js";
 import { getRandomNumber } from "@/lib/utils.js";
 import MovingCodeItem from "./MovingCodeItem.jsx";
-
-function EditorBox({ data }) {
 import gloom from "@/theme/gloom.json";
+
 function EditorBox({ data, dataId }) {
   const { toast } = useToast();
-  const { setErrors, errors, code, setCode, removeLine, pushLine } =
-    useEditorDataProvider();
+  const { setErrors, errors, code, setCode, removeLine, pushLine } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   const [wasBroken, setWasBroken] = useState(false);
   const [movingCode, setMovingCode] = useState(null);
@@ -62,7 +60,7 @@ function EditorBox({ data, dataId }) {
   useEffect(() => {
     if (movingCode === null) {
       const nextIn = getRandomNumber(minMoveTime, maxMoveTime);
-      if (timeoutFunc) clearTimeout(timeoutFunc)
+      if (timeoutFunc) clearTimeout(timeoutFunc);
 
       setTimeout(() => {
         setMovingCode("");
@@ -115,8 +113,8 @@ function EditorBox({ data, dataId }) {
   }
 
   function handleOnRunningClick() {
-    pushLine(movingCode.deletedLine, movingCode.lineNumber)
-    setMovingCode(null)
+    pushLine(movingCode.deletedLine, movingCode.lineNumber);
+    setMovingCode(null);
   }
 
   // Monitor solved lines to restore the editor once all pieces are clicked
@@ -124,13 +122,13 @@ function EditorBox({ data, dataId }) {
     if (solvedLines.length == lines.length && isBroken) {
       setIsBroken(false);
       setWasBroken(true);
-      setSolvedLines([]);;
+      setSolvedLines([]);
 
       toast({
         title: "Hurry up!",
         description: "You have 30s to get below the errors limit",
         variant: "destructive",
-      });;
+      });
 
       // Allow the editor to break again after 30 seconds if needed
       setTimeout(() => {
@@ -174,12 +172,7 @@ function EditorBox({ data, dataId }) {
       {isBroken && (
         <div className="absolute top-0 right-0 h-full w-full overflow-scroll py-6">
           {lines.map((line, i) => (
-            <BrokenEditorLine
-              text={line.innerText}
-              onClick={() => handleOnBrokenClick(i, line)}
-              className={`${solvedLines.includes(i) && "hidden"}`}
-              key={i}
-            />
+            <BrokenEditorLine text={line.innerText} onClick={() => handleOnBrokenClick(i, line)} className={`${solvedLines.includes(i) && "hidden"}`} key={i} />
           ))}
         </div>
       )}
