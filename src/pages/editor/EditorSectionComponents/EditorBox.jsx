@@ -4,12 +4,18 @@ import LoadingEditor from "./LoadingEditor.jsx";
 import { useEditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 import BrokenEditorLine from "./BrokenEditorLine.jsx";
 import { useToast } from "@/components/ui/use-toast.js";
+import { getRandomNumber } from "@/lib/utils.js";
+import MovingCodeItem from "./MovingCodeItem.jsx";
+
+function EditorBox({ data }) {
 import gloom from "@/theme/gloom.json";
 function EditorBox({ data, dataId }) {
   const { toast } = useToast();
-  const { setErrors, errors, moveCode } = useEditorDataProvider();
+  const { setErrors, errors, code, setCode, removeLine, pushLine } =
+    useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   const [wasBroken, setWasBroken] = useState(false);
+  const [movingCode, setMovingCode] = useState(null);
   const [solvedLines, setSolvedLines] = useState([]);
   const [lines, setLines] = useState([]);
 
@@ -27,15 +33,52 @@ function EditorBox({ data, dataId }) {
     setErrors(markers);
   }
 
-  // To-do: Handle code movement if moveCode is set to true
-  useEffect(() => {
-    if (!moveCode) return;
-  }, [moveCode]);
+  // making your line of code
+  // imigrate to other files
+  const minMoveTime = 2 * 60000; // min 2m (in ms)
+  const maxMoveTime = 8 * 60000; // max 8m (in ms)
+  const runningTime = 20 * 1000; // runs in screen for 10s (in ms)
 
-  // Handle code changes and save them to local storage
+  function tryMoveCode() {
+    if (code) {
+      // remove code
+      const removedData = removeLine();
+
+      // make code move
+      setMovingCode(removedData);
+
+      // alert user
+      toast({
+        title: "Oh no a line of code is escaping!",
+        description: "Catch it now or it will never comeback",
+        variant: "destructive",
+      });
+    } else {
+      setMovingCode(null);
+    }
+  }
+
+  let timeoutFunc;
+  useEffect(() => {
+    if (movingCode === null) {
+      const nextIn = getRandomNumber(minMoveTime, maxMoveTime);
+      if (timeoutFunc) clearTimeout(timeoutFunc)
+
+      setTimeout(() => {
+        setMovingCode("");
+      }, nextIn);
+    } else if (!movingCode) {
+      tryMoveCode();
+    } else {
+      timeoutFunc = setTimeout(() => {
+        setMovingCode(null);
+      }, runningTime);
+    }
+  }, [movingCode]);
+
+  // this will run when the code changes (onChange)
   function handleEditorChange(value, event) {
-    data.content = value;
-    localStorage.setItem(dataId, JSON.stringify(data));
+    setCode(value);
   }
 
   // Maximum allowed mistakes before breaking the editor
@@ -50,9 +93,10 @@ function EditorBox({ data, dataId }) {
       });
       setIsBroken(true);
 
-      // Hide all lines of code when the editor breaks
+      // get all lines of code
       const arrElemes = [];
       linesElems.forEach((lineElem) => {
+        // hide them
         if (lineElem.innerText) {
           lineElem.classList.add("hide");
           arrElemes.push(lineElem);
@@ -63,24 +107,30 @@ function EditorBox({ data, dataId }) {
     }
   }, [errors, wasBroken]);
 
-  // Handle clicks on broken line pieces to restore them
+  // when a user clicks on a broken line pieace
+  // this event fires
   function handleOnBrokenClick(i, line) {
     line.classList.remove("hide");
     if (!solvedLines.includes(i)) setSolvedLines([...solvedLines, i]);
   }
 
+  function handleOnRunningClick() {
+    pushLine(movingCode.deletedLine, movingCode.lineNumber)
+    setMovingCode(null)
+  }
+
   // Monitor solved lines to restore the editor once all pieces are clicked
   useEffect(() => {
-    if (solvedLines.length === lines.length && isBroken) {
+    if (solvedLines.length == lines.length && isBroken) {
       setIsBroken(false);
       setWasBroken(true);
-      setSolvedLines([]);
+      setSolvedLines([]);;
 
       toast({
         title: "Hurry up!",
         description: "You have 30s to get below the errors limit",
         variant: "destructive",
-      });
+      });;
 
       // Allow the editor to break again after 30 seconds if needed
       setTimeout(() => {
@@ -95,7 +145,8 @@ function EditorBox({ data, dataId }) {
         beforeMount={handleEditorDidMount} // Set up the custom theme before the editor mounts
         height="100%"
         defaultLanguage={data.language ? data.language : "javascript"}
-        defaultValue={data.content ? data.content : ""}
+        defaultValue={code ? code : ""}
+        value={code}
         loading={<LoadingEditor />}
         theme="gloom"
         onValidate={handleEditorValidation}
@@ -123,10 +174,17 @@ function EditorBox({ data, dataId }) {
       {isBroken && (
         <div className="absolute top-0 right-0 h-full w-full overflow-scroll py-6">
           {lines.map((line, i) => (
-            <BrokenEditorLine text={line.innerText} onClick={() => handleOnBrokenClick(i, line)} className={`${solvedLines.includes(i) && "hidden"}`} key={i} />
+            <BrokenEditorLine
+              text={line.innerText}
+              onClick={() => handleOnBrokenClick(i, line)}
+              className={`${solvedLines.includes(i) && "hidden"}`}
+              key={i}
+            />
           ))}
         </div>
       )}
+
+      {movingCode && <MovingCodeItem codeText={movingCode.deletedLine} onClick={handleOnRunningClick} />}
     </div>
   );
 }

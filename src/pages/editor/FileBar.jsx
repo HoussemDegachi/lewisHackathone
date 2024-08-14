@@ -5,6 +5,7 @@ import SavePageButton from "@/components/ui/saveButton";
 import Timeline from "@/components/ui/Timeline";
 function FileBar() {
   const { directory } = useFileBarDataProvider();
+  // console.dir(directory);
 
   return (
     <div className="w-full h-full flex flex-col text-white bg-[#1E1E3F]">
