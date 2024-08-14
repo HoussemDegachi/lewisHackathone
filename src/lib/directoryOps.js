@@ -45,3 +45,17 @@ export function deleteFileInDir(directory, itemId) {
     return directory;
   }
 }
+
+export function getFilePathInDir(directory, fileId, path = "") {
+  if (directory.type === "file" && directory.id === fileId)
+    return `${path}/${directory.name}`;
+
+  if (directory.type === "folder") {
+    if (directory.contents)
+      for (const content of directory.contents) {
+        const subPath = getPath(content, fileId, `${path}/${directory.name}`);
+        if (subPath) return subPath;
+      }
+  }
+  return "";
+}
