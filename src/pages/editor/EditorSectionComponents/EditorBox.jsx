@@ -11,6 +11,7 @@ function EditorBox({ data }) {
   const [isBroken, setIsBroken] = useState(false);
   // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
+  const [movingCode, setMovingCode] = useState(false)
   const [solvedLines, setSolvedLines] = useState([])
   const [lines, setLines] = useState([]);
 
