@@ -55,7 +55,7 @@ export function FileBarDataProvider({ children }) {
     if (data.type === "file" && data.extension) {
       const localData = JSON.parse(localStorage.getItem(fileId));
       localData.language = fileExtensionMap[data.extension] || data.extension;
-      localStorage.setItem(fileId, localData);
+      localStorage.setItem(fileId, JSON.stringify(localData));
     }
     setDirectory({ ...updateFileInDir(directory, fileId, data) });
   };
