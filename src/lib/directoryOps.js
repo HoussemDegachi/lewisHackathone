@@ -1,18 +1,31 @@
 export function addFileToDir(directory, folderId, newItem) {
   if (directory.type === "file") return directory;
-  newItem.path += `/${directory.name}`;
 
   if (directory.type === "folder") {
     if (directory.id === folderId) {
-      newItem.path += `/${newItem.name}`;
       directory.contents.push(newItem);
       return directory;
     }
+    if (directory.contents)
+      for (const content of directory.contents) {
+        content = addFileToDir(content, folderId, newItem);
+      }
+  }
+  return directory;
+}
+
+export function updateFileInDir(directory, objId, data) {
+  if (directory.id === objId) {
+    for (let key in data) {
+      directory[key] = data[key];
+    }
+    return directory;
   }
 
-  for (const content of directory.contents) {
-    addFileToDir(content, folderId, newItem);
-  }
+  if (directory.contents)
+    for (const content of directory.contents) {
+      updateFileInDir(content, objId, data);
+    }
 
   return directory;
 }

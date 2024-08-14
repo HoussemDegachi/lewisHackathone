@@ -1,4 +1,3 @@
-
 import React from "react";
 import FileList from "./FileBarCompoents/FileList";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
@@ -6,6 +5,7 @@ import SavePageButton from "@/components/ui/saveButton";
 
 function FileBar() {
   const { directory } = useFileBarDataProvider();
+  // console.dir(directory);
 
   return (
     <div className="w-full h-full flex flex-col text-white bg-slate-900">

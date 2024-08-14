@@ -2,8 +2,6 @@ import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 import React, { useEffect, useRef, useState } from "react";
 
 function RenameFile({ item }) {
-  console.log("render");
-
   const [name, setName] = useState(item.name || "");
   const { updateFile, deleteFile } = useFileBarDataProvider();
   const ref = useRef(null);
@@ -18,9 +16,6 @@ function RenameFile({ item }) {
   const handleClickOutSide = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       saveChanges();
-      useEffect(() => {
-        if (ref.current) ref.current.focus();
-      }, []);
     }
   };
 
