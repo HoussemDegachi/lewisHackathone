@@ -12,7 +12,7 @@ function EditorSection() {
     fileData ?
     (<div className="h-full">
     <FilePathDisplay path={fileData.path} />
-    <EditorBox data={fileData} dataId={fileId} />
+    <EditorBox data={fileData} />
     </div>) : <Navigate to="/" />
   
   );

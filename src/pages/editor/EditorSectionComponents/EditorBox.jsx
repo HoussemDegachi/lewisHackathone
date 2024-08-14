@@ -5,9 +5,9 @@ import { useEditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 import BrokenEditorLine from "./BrokenEditorLine.jsx";
 import { useToast } from "@/components/ui/use-toast.js";
 
-function EditorBox({ data, dataId }) {
+function EditorBox({ data }) {
   const { toast } = useToast();
-  const { setErrors, errors, moveCode } = useEditorDataProvider();
+  const { setErrors, errors, code, setCode, getLine, setLine, removeLine } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
@@ -18,20 +18,20 @@ function EditorBox({ data, dataId }) {
   // to new errors
   function handleEditorValidation(markers) {
     setErrors(markers);
+    
   }
 
   // to do
   // if move is set to true
   // chose random line and move it to
   // random location in random file
-  useEffect(() => {
-    if (!moveCode) return;
-  }, [moveCode]);
+  // useEffect(() => {
+  //   if (!moveCode) return;
+  // }, [moveCode]);
 
   // this will run when the code changes (onChange)
   function handleEditorChange(value, event) {
-    data.content = value;
-    localStorage.setItem(dataId, JSON.stringify(data));
+    setCode(value);
   }
 
   // responsible for breaking the editor
@@ -105,7 +105,8 @@ function EditorBox({ data, dataId }) {
         // className={`${isBroken && "hidden"}`}
         height="100%"
         defaultLanguage={data.language ? data.language : "javascript"}
-        defaultValue={data.content ? data.content : ""}
+        defaultValue={code ? code : ""}
+        value={code}
         loading={<LoadingEditor />}
         theme="vs-dark"
         onValidate={handleEditorValidation}

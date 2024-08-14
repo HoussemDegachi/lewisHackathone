@@ -87,7 +87,7 @@ export function FileBarDataProvider({ children }) {
       if (obj.type == "folder") {
         if (!path) path = obj.name;
         else path += `/${obj.name}`;
-      } else if (obj.name !== currentName) {
+      } else  {
         if (obj.type === "file") {
           obj.path = path + `${path ? "/" : ""}${obj.name}`;
           const data = JSON.parse(localStorage.getItem(obj.id));
