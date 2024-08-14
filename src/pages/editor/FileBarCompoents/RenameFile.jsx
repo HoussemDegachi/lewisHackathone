@@ -1,5 +1,7 @@
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
+import { FilePen } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import FileList from "./FileList";
 
 function RenameFile({ item }) {
   const [name, setName] = useState(item.name || "");
@@ -27,6 +29,7 @@ function RenameFile({ item }) {
   });
 
   const handleChange = (e) => setName(e.target.value);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     saveChanges();
@@ -35,14 +38,23 @@ function RenameFile({ item }) {
   return (
     <div className="w-full" onClick={(e) => e.stopPropagation()}>
       <form onSubmit={handleSubmit}>
-        <input
-          value={name}
-          ref={ref}
-          onChange={handleChange}
-          autoFocus
-          className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
-        />
+        <div className="flex items-center">
+          <FilePen size={16} />
+          <input
+            name="name"
+            value={name}
+            ref={ref}
+            onChange={handleChange}
+            autoFocus
+            className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
+          />
+        </div>
       </form>
+      <div className="pl-3">
+        {item?.contents?.map((file) => (
+          <FileList file={file} key={file.id} />
+        ))}
+      </div>
     </div>
   );
 }

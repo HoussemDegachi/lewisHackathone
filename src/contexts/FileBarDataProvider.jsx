@@ -20,9 +20,9 @@ export function FileBarDataProvider({ children }) {
     }
   );
 
-  // useEffect(() => {
-  //   localStorage.setItem("directory", JSON.stringify(directory));
-  // }, [directory]);
+  useEffect(() => {
+    localStorage.setItem("directory", JSON.stringify(directory));
+  }, [directory]);
 
   const createFile = (type, folderId) => {
     const newObj = {
