@@ -14,6 +14,7 @@ import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 
 function FileList({ file }) {
   const { updateFile, deleteFile } = useFileBarDataProvider();
+  const { directory } = useFileBarDataProvider();
 
   const handleRename = (e) => {
     e.stopPropagation();
@@ -25,6 +26,8 @@ function FileList({ file }) {
   };
 
   const deleteRename = (e) => {
+    console.log(e);
+
     e.stopPropagation();
     deleteFile(file.id);
   };
@@ -42,10 +45,12 @@ function FileList({ file }) {
           <FilePen size={14} className="mr-1.5" />
           Rename
         </ContextMenuItem>
-        <ContextMenuItem onClick={deleteRename}>
-          <FileX size={14} className="mr-1.5" />
-          Delete
-        </ContextMenuItem>
+        {file !== directory && (
+          <ContextMenuItem onClick={deleteRename}>
+            <FileX size={14} className="mr-1.5" />
+            Delete
+          </ContextMenuItem>
+        )}
       </ContextMenuContent>
     </ContextMenu>
   );

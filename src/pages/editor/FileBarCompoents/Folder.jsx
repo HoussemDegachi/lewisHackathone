@@ -4,7 +4,7 @@ import FileList from "./FileList";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 
 function Folder({ folder }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { createFile } = useFileBarDataProvider();
 
   const toggleOpen = (e) => {
