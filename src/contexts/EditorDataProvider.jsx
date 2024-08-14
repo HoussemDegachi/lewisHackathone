@@ -1,3 +1,4 @@
+import { getRandomNumber } from '@/lib/utils';
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
@@ -9,7 +10,8 @@ const initialContext = {
     setErrors: () => {},
     getLine: () => {},
     setLine: () => {},
-    removeLine: () => {}
+    removeLine: () => {},
+    pushLine: () => {}
 }
 
 
@@ -22,16 +24,13 @@ export function EditorDataProvider({ children }) {
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    if (code) {
+    if (code != null) {
       const fileData = JSON.parse(localStorage.getItem(fileId))
       fileData.content = code;
       localStorage.setItem(fileId, JSON.stringify(fileData))
     }
   }, [code])
 
-  const getRandomNumber = (min, max) => {
-    return Math.floor(Math.random() * max) + min
-  }
 
   const getLine = (lineNumber=null) => {
     const lines = code.split("\n")
@@ -69,11 +68,20 @@ export function EditorDataProvider({ children }) {
 
     const deletedLine = lines.splice(lineNumber, 1)
     setCode(lines.join("\n"))
-    return deletedLine;
+
+    return {deletedLine, lineNumber};
+  }
+
+  const pushLine = (value, lineNumber) => {
+    const lines = code.split("\n")
+    if (lineNumber >= lines.length)
+      return null
+    lines.splice(lineNumber, 0, value)
+    setCode(lines.join("\n"))
   }
 
   return (
-    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine}}>
+    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine}}>
       {children}
     </EditorDataContext.Provider>
   )

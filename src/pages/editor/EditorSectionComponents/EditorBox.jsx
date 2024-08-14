@@ -4,31 +4,68 @@ import LoadingEditor from "./LoadingEditor.jsx";
 import { useEditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 import BrokenEditorLine from "./BrokenEditorLine.jsx";
 import { useToast } from "@/components/ui/use-toast.js";
+import { getRandomNumber } from "@/lib/utils.js";
+import MovingCodeItem from "./MovingCodeItem.jsx";
 
 function EditorBox({ data }) {
   const { toast } = useToast();
-  const { setErrors, errors, code, setCode, getLine, setLine, removeLine } = useEditorDataProvider();
+  const { setErrors, errors, code, setCode, removeLine, pushLine } =
+    useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
-  const [movingCode, setMovingCode] = useState(false)
-  const [solvedLines, setSolvedLines] = useState([])
+  const [movingCode, setMovingCode] = useState(null);
+  const [solvedLines, setSolvedLines] = useState([]);
   const [lines, setLines] = useState([]);
 
   // when errors occure in code it changes the errors variable
   // to new errors
   function handleEditorValidation(markers) {
     setErrors(markers);
-    
   }
 
-  // to do
-  // if move is set to true
-  // chose random line and move it to
-  // random location in random file
-  // useEffect(() => {
-  //   if (!moveCode) return;
-  // }, [moveCode]);
+  // making your line of code
+  // imigrate to other files
+  const minMoveTime = 2 * 60000; // min 2m (in ms)
+  const maxMoveTime = 8 * 60000; // max 8m (in ms)
+  const runningTime = 20 * 1000; // runs in screen for 10s (in ms)
+
+  function tryMoveCode() {
+    if (code) {
+      // remove code
+      const removedData = removeLine();
+
+      // make code move
+      setMovingCode(removedData);
+
+      // alert user
+      toast({
+        title: "Oh no a line of code is escaping!",
+        description: "Catch it now or it will never comeback",
+        variant: "destructive",
+      });
+    } else {
+      setMovingCode(null);
+    }
+  }
+
+  let timeoutFunc;
+  useEffect(() => {
+    if (movingCode === null) {
+      const nextIn = getRandomNumber(minMoveTime, maxMoveTime);
+      if (timeoutFunc) clearTimeout(timeoutFunc)
+
+      setTimeout(() => {
+        setMovingCode("");
+      }, nextIn);
+    } else if (!movingCode) {
+      tryMoveCode();
+    } else {
+      timeoutFunc = setTimeout(() => {
+        setMovingCode(null);
+      }, runningTime);
+    }
+  }, [movingCode]);
 
   // this will run when the code changes (onChange)
   function handleEditorChange(value, event) {
@@ -69,10 +106,12 @@ function EditorBox({ data }) {
     if (!solvedLines.includes(i)) setSolvedLines([...solvedLines, i]);
   }
 
-  useEffect(() => {
-    // console.log(lines.length, solvedLines.length)
-    // console.log(lines, solvedLines)
+  function handleOnRunningClick() {
+    pushLine(movingCode.deletedLine, movingCode.lineNumber)
+    setMovingCode(null)
+  }
 
+  useEffect(() => {
     if (solvedLines.length == lines.length && isBroken) {
       setIsBroken(false);
       setWasBroken(true);
@@ -119,6 +158,8 @@ function EditorBox({ data }) {
           ))}
         </div>
       )}
+
+      {movingCode && <MovingCodeItem codeText={movingCode.deletedLine} onClick={handleOnRunningClick} />}
     </div>
   );
 }
