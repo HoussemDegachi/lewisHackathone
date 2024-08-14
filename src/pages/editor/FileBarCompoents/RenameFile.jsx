@@ -3,16 +3,7 @@ import { FilePen } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import FileList from "./FileList";
 import AlertModal from "./AlertModal";
-
-const fileExtensionMap = {
-  ts: "typescript",
-  js: "javascript",
-  css: "css",
-  less: "less",
-  scss: "scss",
-  json: "json",
-  html: "html",
-};
+import { fileExtensionMap } from "@/lib/utils";
 
 function RenameFile({ item }) {
   const [input, setInput] = useState(
@@ -37,7 +28,6 @@ function RenameFile({ item }) {
     }
 
     if (input) updateFile(item.id, updateData);
-    else if (item.name) updateFile(item.id, updateData);
     else deleteFile(item.id);
   };
 
@@ -48,10 +38,12 @@ function RenameFile({ item }) {
 
   const handleClickOutSide = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      if (item.toBeType === "file") {
-        if (!fileExtensionMap[fileExtension]) setModal(true);
-        else saveChanges();
-      } else if (item.toBeType === "folder") saveChanges();
+      if (input) {
+        if (item.toBeType === "file") {
+          if (!fileExtensionMap[fileExtension]) setModal(true);
+          else saveChanges();
+        } else if (item.toBeType === "folder") saveChanges();
+      } else deleteFile(item.id);
     }
   };
 
@@ -66,10 +58,12 @@ function RenameFile({ item }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (item.toBeType === "file") {
-      if (!fileExtensionMap[fileExtension]) setModal(true);
-      else saveChanges();
-    } else if (item.toBeType === "folder") saveChanges();
+    if (input) {
+      if (item.toBeType === "file") {
+        if (!fileExtensionMap[fileExtension]) setModal(true);
+        else saveChanges();
+      } else if (item.toBeType === "folder") saveChanges();
+    } else deleteFile(item.id);
   };
 
   return (
@@ -77,15 +71,15 @@ function RenameFile({ item }) {
       {modal && <AlertModal onSubmit={handleModalSubmit} />}
       <div className="w-full" onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
-          <div className="flex items-center">
-            <FilePen size={16} />
+          <div className="flex items-center gap-0.5">
+            <FilePen size={16} className=" shrink-0" />
             <input
               name="input"
               value={input}
               ref={ref}
               onChange={handleChange}
               autoFocus
-              className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
+              className="bg-gray-700 outline-none w-full px-0.5 focus:ring-2"
             />
           </div>
         </form>

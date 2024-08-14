@@ -6,6 +6,7 @@ import {
   getFilePathInDir,
   updateFileInDir,
 } from "@/lib/directoryOps";
+import { fileExtensionMap } from "@/lib/utils";
 
 const FileBarDataContext = createContext();
 
@@ -51,9 +52,9 @@ export function FileBarDataProvider({ children }) {
   };
 
   const updateFile = (fileId, data) => {
-    if (data.type === "file" && data.language) {
+    if (data.type === "file" && data.extension) {
       const localData = JSON.parse(localStorage.getItem(fileId));
-      localData.language = data.language;
+      localData.language = fileExtensionMap[data.extension] || data.extension;
       localStorage.setItem(fileId, localData);
     }
     setDirectory({ ...updateFileInDir(directory, fileId, data) });
