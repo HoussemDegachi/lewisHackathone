@@ -700,7 +700,7 @@
       "token": "support.constant.font-name"
     },
     {
-      "foreground": "#F1EFF7",
+      "foreground": "#39FF14",
       "token": "meta.tag"
     },
     {
@@ -736,7 +736,7 @@
       "token": "punctuation.definition.constant"
     },
     {
-      "foreground": "#66D9EF",
+      "foreground": "#39FF14",
       "token": "entity.name.tag"
     },
     {

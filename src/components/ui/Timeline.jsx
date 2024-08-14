@@ -11,7 +11,7 @@ const Timeline = () => {
               </svg>
             </span>
 
-            <p className="font-light text-gray text-[0.82rem] block ">Timeline</p>
+            <p className="font-light text-gray text-[0.81rem] block ">Timeline</p>
           </summary>
 
           <div className=" mt-1 pl-3 py-2 space-y-2 text-white *:text-[0.8rem]">
