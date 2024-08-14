@@ -1,6 +1,10 @@
 import { v4 as uuid } from "uuid";
 import { createContext, useContext, useEffect, useState } from "react";
-import { addFileToDir, updateFileInDir } from "@/lib/directoryOps";
+import {
+  addFileToDir,
+  deleteFileInDir,
+  updateFileInDir,
+} from "@/lib/directoryOps";
 
 const FileBarDataContext = createContext();
 
@@ -48,14 +52,8 @@ export function FileBarDataProvider({ children }) {
   };
 
   const deleteFile = (fileId) => {
-    function deletObj(obj, objId) {
-      if (obj.contents)
-        obj.contents = obj.contents.filter((content) => content.id !== objId);
-      if (obj.contents)
-        for (const content of obj.contents) deletObj(content, objId);
-      return obj;
-    }
-    setDirectory({ ...deletObj(directory, fileId) });
+    localStorage.removeItem(fileId);
+    setDirectory({ ...deleteFileInDir(directory, fileId) });
   };
 
   return (

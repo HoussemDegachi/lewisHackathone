@@ -8,7 +8,7 @@ export function addFileToDir(directory, folderId, newItem) {
     }
     if (directory.contents)
       for (const content of directory.contents) {
-        content = addFileToDir(content, folderId, newItem);
+        addFileToDir(content, folderId, newItem);
       }
   }
   return directory;
@@ -28,4 +28,20 @@ export function updateFileInDir(directory, objId, data) {
     }
 
   return directory;
+}
+
+export function deleteFileInDir(directory, itemId) {
+  if (directory.type === "file") return directory;
+
+  if (directory.type === "folder") {
+    if (directory.contents) {
+      directory.contents = directory.contents.filter(
+        (content) => content.id !== itemId
+      );
+
+      for (const content of directory.contents)
+        deleteFileInDir(content, itemId);
+    }
+    return directory;
+  }
 }
