@@ -4,7 +4,7 @@ import LoadingEditor from "./LoadingEditor.jsx";
 import { useEditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 import BrokenEditorLine from "./BrokenEditorLine.jsx";
 import { useToast } from "@/components/ui/use-toast.js";
-
+import gloom from "@/theme/gloom.json";
 function EditorBox({ data, dataId }) {
   const { toast } = useToast();
   const { setErrors, errors, moveCode } = useEditorDataProvider();
@@ -14,26 +14,11 @@ function EditorBox({ data, dataId }) {
   const [lines, setLines] = useState([]);
 
   // Define the custom "Glitchy Madness" theme
-  const handleEditorWillMount = (monaco) => {
-    monaco.editor.defineTheme("glitchyMadness", {
+  const handleEditorDidMount = (monaco) => {
+    monaco.editor.defineTheme("gloom", {
       base: "vs-dark",
       inherit: true,
-      rules: [
-        { token: "comment", foreground: "A9A9A9" }, // Dim Gray for comments
-        { token: "keyword", foreground: "00FFFF" }, // Electric Blue for keywords
-        { token: "string", foreground: "FFFF00" }, // Neon Yellow for strings
-        { token: "number", foreground: "FF4500" }, // Glowing Red for numbers/errors
-        { token: "variable", foreground: "39FF14" }, // Neon Green for variables
-      ],
-      colors: {
-        "editor.background": "#2C003E", // Dark Purple for background
-        "editor.foreground": "#39FF14", // Neon Green for text
-        "editorCursor.foreground": "#FF1493", // Bright Pink for cursor
-        "editorLineNumber.foreground": "#FF4500", // Glowing Red for line numbers
-        // "editor.lineHighlightBackground": "#6F00FF", // Electric Indigo for line highlights
-        "editor.selectionBackground": "#FF00FF", // Magenta for selected text background
-        "editor.wordHighlightBackground": "#8B0000", // Blood Red for insult text (custom effect needed)
-      },
+      ...gloom,
     });
   };
 
@@ -107,15 +92,32 @@ function EditorBox({ data, dataId }) {
   return (
     <div className="h-full bg-editor relative">
       <Editor
-        beforeMount={handleEditorWillMount} // Set up the custom theme before the editor mounts
+        beforeMount={handleEditorDidMount} // Set up the custom theme before the editor mounts
         height="100%"
         defaultLanguage={data.language ? data.language : "javascript"}
         defaultValue={data.content ? data.content : ""}
         loading={<LoadingEditor />}
-        theme="glitchyMadness" // Apply the "Glitchy Madness" theme
+        theme="gloom"
         onValidate={handleEditorValidation}
         onChange={handleEditorChange}
-        options={{ readOnly: isBroken }} // Make the editor read-only when broken
+        options={{
+          readOnly: isBroken,
+          fontSize: 14,
+          fontLigatures: true,
+          wordWrap: "on",
+          minimap: {
+            enabled: false,
+          },
+          bracketPairColorization: {
+            enabled: true,
+          },
+          cursorBlinking: "expand",
+          formatOnPaste: true,
+          suggest: {
+            showFields: false,
+            showFunctions: false,
+          },
+        }}
       />
 
       {isBroken && (

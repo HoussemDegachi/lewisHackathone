@@ -2,8 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: Papyrus;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  list-style: none;
+  box-sizing: border-box;
+}
+
 @layer components {
-    .hide {
-        @apply hidden;
-    }
+  .hide {
+    @apply hidden;
+  }
+}
+
+@font-face {
+  font-family: "Papyrus";
+  src: url("./public/font/papyrus.ttf") format("truetype");
+  font-style: normal;
 }
