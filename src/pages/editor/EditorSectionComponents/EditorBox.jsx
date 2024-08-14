@@ -44,61 +44,53 @@ function EditorBox({ data }) {
       toast({
         title: "Max number of errors exceded!",
         description: "Catch your code to return it back",
-        variant: "destructive"
-      })
+        variant: "destructive",
+      });
       setIsBroken(true);
-      
+
       // get all lines of code
       const arrElemes = [];
       linesElems.forEach((lineElem) => {
         // hide them
-        if (lineElem.innerText)
-        {
+        if (lineElem.innerText) {
           lineElem.classList.add("hide");
           arrElemes.push(lineElem);
         }
       });
 
-      
       setLines(arrElemes);
     }
   }, [errors, wasBroken]);
-  
 
   // when a user clicks on a broken line pieace
   // this event fires
-  function handleOnBrokenClick(i, line)
-  {
+  function handleOnBrokenClick(i, line) {
     line.classList.remove("hide");
-    if (!solvedLines.includes(i))
-      setSolvedLines([...solvedLines, i])
-
+    if (!solvedLines.includes(i)) setSolvedLines([...solvedLines, i]);
   }
 
   useEffect(() => {
-    console.log(lines.length, solvedLines.length)
-    console.log(lines, solvedLines)
+    // console.log(lines.length, solvedLines.length)
+    // console.log(lines, solvedLines)
 
-    if (solvedLines.length == lines.length && isBroken)
-    {
+    if (solvedLines.length == lines.length && isBroken) {
       setIsBroken(false);
       setWasBroken(true);
-      setSolvedLines([])
+      setSolvedLines([]);
 
       toast({
         title: "Hury up!",
         description: "You have 30s to get below errors limit",
-        variant: "destructive"
-      })
+        variant: "destructive",
+      });
 
       // allows editor to break again after 30s
       // if needed
       setTimeout(() => {
-        setWasBroken(false)
-      }, 30000)
+        setWasBroken(false);
+      }, 30000);
     }
-  }, [solvedLines])
-
+  }, [solvedLines]);
 
   return (
     <div className="h-full bg-editor relative">
@@ -112,13 +104,18 @@ function EditorBox({ data }) {
         theme="vs-dark"
         onValidate={handleEditorValidation}
         onChange={handleEditorChange}
-        options={{readOnly: isBroken}}
+        options={{ readOnly: isBroken }}
       />
 
       {isBroken && (
         <div className="absolute top-0 right-0 h-full w-full overflow-scroll py-6">
           {lines.map((line, i) => (
-            <BrokenEditorLine text={line.innerText} onClick={() => handleOnBrokenClick(i, line)} className={`${solvedLines.includes(i) && "hidden"}`} key={i} />
+            <BrokenEditorLine
+              text={line.innerText}
+              onClick={() => handleOnBrokenClick(i, line)}
+              className={`${solvedLines.includes(i) && "hidden"}`}
+              key={i}
+            />
           ))}
         </div>
       )}

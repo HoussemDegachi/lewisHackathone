@@ -1,9 +1,9 @@
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
+import { FilePen } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import FileList from "./FileList";
 
 function RenameFile({ item }) {
-  console.log("render");
-
   const [name, setName] = useState(item.name || "");
   const { updateFile, deleteFile } = useFileBarDataProvider();
   const ref = useRef(null);
@@ -18,20 +18,8 @@ function RenameFile({ item }) {
   const handleClickOutSide = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       saveChanges();
-
-      useEffect(() => {
-        if (ref.current) ref.current.focus();
-      }, []);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(name);
-  //   return () => {
-  //     console.log(name);
-  //     // deleteFile(item.id);
-  //   };
-  // });
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutSide);
@@ -40,13 +28,8 @@ function RenameFile({ item }) {
     };
   });
 
-  useEffect(() => {
-    return () => {
-      console.log(name);
-    };
-  }, [name]);
-
   const handleChange = (e) => setName(e.target.value);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     saveChanges();
@@ -55,13 +38,23 @@ function RenameFile({ item }) {
   return (
     <div className="w-full" onClick={(e) => e.stopPropagation()}>
       <form onSubmit={handleSubmit}>
-        <input
-          value={name}
-          ref={ref}
-          onChange={handleChange}
-          className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
-        />
+        <div className="flex items-center">
+          <FilePen size={16} />
+          <input
+            name="name"
+            value={name}
+            ref={ref}
+            onChange={handleChange}
+            autoFocus
+            className="bg-slate-700 outline-none w-full px-1 focus:ring-2"
+          />
+        </div>
       </form>
+      <div className="pl-3">
+        {item?.contents?.map((file) => (
+          <FileList file={file} key={file.id} />
+        ))}
+      </div>
     </div>
   );
 }
