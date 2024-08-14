@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   addFileToDir,
   deleteFileInDir,
+  getFilePathInDir,
   updateFileInDir,
 } from "@/lib/directoryOps";
 
@@ -56,9 +57,11 @@ export function FileBarDataProvider({ children }) {
     setDirectory({ ...deleteFileInDir(directory, fileId) });
   };
 
+  const getFilePath = (fileId) => getFilePathInDir(directory, fileId);
+
   return (
     <FileBarDataContext.Provider
-      value={{ directory, createFile, updateFile, deleteFile }}
+      value={{ directory, createFile, updateFile, deleteFile, getFilePath }}
     >
       {children}
     </FileBarDataContext.Provider>
