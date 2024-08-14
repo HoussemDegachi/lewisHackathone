@@ -14,3 +14,7 @@ export const fileExtensionMap = {
   json: "json",
   html: "html",
 };
+
+export function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * max) + min
+}

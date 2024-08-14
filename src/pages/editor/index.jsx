@@ -2,6 +2,8 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import FileBar from "./FileBar.jsx";
 import EditorSection from "./EditorSection.jsx";
 import NoFile from "./EditorSectionComponents/NoFile.jsx";
+import { FileBarDataProvider } from "@/contexts/FileBarDataProvider.jsx";
+import { EditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 
 
 function index({ isRoot }) {
@@ -22,9 +24,11 @@ function index({ isRoot }) {
       {/* large side is for code editor section */}
       <ResizablePanel defaultSize={80}>
         <div className="h-full">
+        <EditorDataProvider>
           {
             isRoot ? <NoFile /> : <EditorSection />
           }
+        </EditorDataProvider>
         </div>
       </ResizablePanel>
     </ResizablePanelGroup>

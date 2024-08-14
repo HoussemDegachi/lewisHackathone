@@ -72,6 +72,44 @@ module.exports = {
           },
           "75%": {
             transform: "translate(20%, 90%) rotate(-20deg)",
+          }
+        },
+        "run-out": {
+          "0%": {
+            transform: "translate(0)"
+          },
+        
+          "5%": {
+            transform: "translate(80dvw, 40dvh)"
+          },
+        
+          "15%": {
+            transform: "translate(10dvw, 80dvh)"
+          },
+        
+          "25%": {
+            transform: "translate(50dvw, 0dvh)"
+          },
+        
+          "38%": {
+            transform: "translate(100dvw, 100dvh)"
+          },
+        
+          "52%": {
+            transform: "translate(20dvw, 10dvh)"
+          },
+        
+          "70%": {
+            transform: "translate(50dvw, 100dvh)"
+          },
+        
+          "85%": {
+            opacity: "1",
+          },
+
+          "100%": {
+            opacity: "0",
+            transform: "translate(0)",
           },
         },
       },
@@ -79,6 +117,7 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "space-float": "space-float 20s infinite ease-in-out",
+        "run-out": "run-out 20s linear"
       },
     },
   },
