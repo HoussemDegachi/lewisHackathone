@@ -1,10 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./pages/**/*.{js,jsx}",
+  content: [
+    "./pages/**/*.{js,jsx}",
     "./components/**/*.{js,jsx}",
     "./app/**/*.{js,jsx}",
-    "./src/**/*.{js,jsx}"],
+    "./src/**/*.{js,jsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -21,34 +23,34 @@ module.exports = {
       xl: "20px",
       base: "18px",
       sm: "16px",
-      "xs": "14px",
+      xs: "14px",
       "2xs": "12px",
     },
     extend: {
-      colors: {
-        editor: "#1e1e1e",
-        "primary": "#374151",
-        //  Dark Purple for background
-        Purple: "#2C003E",
-        // Neon Green for texts
-        green: "#39FF14",
-        // Bright Pink for cursor
-        pink: "#FF1493",
-        // Electric Blue for keyboards after highlighting
-        blue: "#00FFFF",
-        //  Neon Yellow for strings
-        yellow: "#FFFF00",
-        //  Glowing Red for Errors/Warnings
-        Red: "#FF4500",
-        // Dim Gray for Comments
-        gray: "#A9A9A9",
-        // Electric Indigo for Line Highlights
-        indigo: "#6F00FF",
-        // Magenta  for Selection Background
-        magenta: "#FF00FF",
-        // Blood Red  for Insult Text
-        insult: "#8B0000",
-      },
+      // colors: {
+      //   editor: "#1e1e1e",
+      //   "primary": "#374151",
+      //   //  Dark Purple for background
+      //   Purple: "#2C003E",
+      //   // Neon Green for texts
+      //   green: "#39FF14",
+      //   // Bright Pink for cursor
+      //   pink: "#FF1493",
+      //   // Electric Blue for keyboards after highlighting
+      //   blue: "#00FFFF",
+      //   //  Neon Yellow for strings
+      //   yellow: "#FFFF00",
+      //   //  Glowing Red for Errors/Warnings
+      //   Red: "#FF4500",
+      //   // Dim Gray for Comments
+      //   gray: "#A9A9A9",
+      //   // Electric Indigo for Line Highlights
+      //   indigo: "#6F00FF",
+      //   // Magenta  for Selection Background
+      //   magenta: "#FF00FF",
+      //   // Blood Red  for Insult Text
+      //   insult: "#8B0000",
+      // },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -59,24 +61,24 @@ module.exports = {
           to: { height: "0" },
         },
         "space-float": {
-          '0%, 100%': {
+          "0%, 100%": {
             transform: "translate(0, 0) rotate(0deg)",
           },
-          '25%': {
+          "25%": {
             transform: "translate(60%, 60%) rotate(20deg)",
           },
-          '50%': {
+          "50%": {
             transform: "translate(40%, 50%) rotate(0deg)",
           },
-          '75%': {
+          "75%": {
             transform: "translate(20%, 90%) rotate(-20deg)",
-          }
-        }
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "space-float": "space-float 20s infinite ease-in-out"
+        "space-float": "space-float 20s infinite ease-in-out",
       },
     },
   },

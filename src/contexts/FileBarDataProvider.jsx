@@ -27,7 +27,7 @@ export function FileBarDataProvider({ children }) {
 
   const createFile = (type, folderId) => {
     const newObj = {
-      name: null,
+      name: "",
       type: "rename",
       toBeType: type,
       id: uuid(),
@@ -36,11 +36,13 @@ export function FileBarDataProvider({ children }) {
     if (type === "folder") newObj.contents = [];
 
     if (type === "file") {
+      newObj.extension = "";
+      newObj.language = "text";
       localStorage.setItem(
         newObj.id,
         JSON.stringify({
           content: "",
-          language: "",
+          language: newObj.language,
         })
       );
     }
@@ -49,6 +51,11 @@ export function FileBarDataProvider({ children }) {
   };
 
   const updateFile = (fileId, data) => {
+    if (data.type === "file" && data.language) {
+      const localData = JSON.parse(localStorage.getItem(fileId));
+      localData.language = data.language;
+      localStorage.setItem(fileId, localData);
+    }
     setDirectory({ ...updateFileInDir(directory, fileId, data) });
   };
 
