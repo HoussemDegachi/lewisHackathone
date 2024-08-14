@@ -16,8 +16,8 @@ function EditorBox({ data, dataId }) {
   // Define the custom "Glitchy Madness" theme
   const handleEditorDidMount = (monaco) => {
     monaco.editor.defineTheme("gloom", {
-      base: "vs-dark",
       inherit: true,
+      base: "vs-dark",
       ...gloom,
     });
   };
