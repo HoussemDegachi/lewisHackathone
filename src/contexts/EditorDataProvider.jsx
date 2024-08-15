@@ -32,8 +32,10 @@ export function EditorDataProvider({ children }) {
 
   const importSavedData = () => {
     const data = JSON.parse(localStorage.getItem(fileId))
-    setCode(data.content)
-    setLanguage(data.language)
+    if (data) {
+      setCode(data.content)
+      setLanguage(data.language)
+    }
   }
 
   useEffect(() => {
