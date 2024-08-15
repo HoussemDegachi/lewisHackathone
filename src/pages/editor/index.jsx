@@ -1,12 +1,15 @@
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable.jsx";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable.jsx";
 import FileBar from "./FileBar.jsx";
 import EditorSection from "./EditorSection.jsx";
 import NoFile from "./EditorSectionComponents/NoFile.jsx";
 import { EditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
-
+import NavBar from "./NavBar.jsx";
 
 function index({ isRoot }) {
-
   return (
     // create a resizable panel with two sides
     <ResizablePanelGroup
