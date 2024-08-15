@@ -27,30 +27,9 @@ module.exports = {
       "2xs": "12px",
     },
     extend: {
-      // colors: {
-      //   editor: "#1e1e1e",
-      //   "primary": "#374151",
-      //   //  Dark Purple for background
-      //   Purple: "#2C003E",
-      //   // Neon Green for texts
-      //   green: "#39FF14",
-      //   // Bright Pink for cursor
-      //   pink: "#FF1493",
-      //   // Electric Blue for keyboards after highlighting
-      //   blue: "#00FFFF",
-      //   //  Neon Yellow for strings
-      //   yellow: "#FFFF00",
-      //   //  Glowing Red for Errors/Warnings
-      //   Red: "#FF4500",
-      //   // Dim Gray for Comments
-      //   gray: "#A9A9A9",
-      //   // Electric Indigo for Line Highlights
-      //   indigo: "#6F00FF",
-      //   // Magenta  for Selection Background
-      //   magenta: "#FF00FF",
-      //   // Blood Red  for Insult Text
-      //   insult: "#8B0000",
-      // },
+      colors: {
+        editor: "#292A44",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
