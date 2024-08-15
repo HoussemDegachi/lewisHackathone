@@ -11,7 +11,9 @@ const initialContext = {
     getLine: () => {},
     setLine: () => {},
     removeLine: () => {},
-    pushLine: () => {}
+    pushLine: () => {},
+    fileId: "",
+    setFileId: () => {}
 }
 
 
@@ -19,9 +21,13 @@ const EditorDataContext = createContext(initialContext);
 export const useEditorDataProvider = () => useContext(EditorDataContext)
 
 export function EditorDataProvider({ children }) {
-  const { fileId } = useParams();
-  const [code, setCode] = useState(() => (fileId && JSON.parse(localStorage.getItem(fileId))?.content) || null);
+  const [fileId, setFileId] = useState(null)
+  const [code, setCode] = useState(null);
   const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    setCode(fileId && JSON.parse(localStorage.getItem(fileId))?.content)
+  }, [fileId])
 
   useEffect(() => {
     if (code != null) {
@@ -81,7 +87,7 @@ export function EditorDataProvider({ children }) {
   }
 
   return (
-    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine}}>
+    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine, fileId, setFileId}}>
       {children}
     </EditorDataContext.Provider>
   )

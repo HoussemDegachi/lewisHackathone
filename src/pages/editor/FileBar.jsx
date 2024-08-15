@@ -1,8 +1,8 @@
 import React from "react";
 import FileList from "./FileBarCompoents/FileList";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
-import SavePageButton from "@/components/ui/saveButton";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import TimeLine from "./FileBarCompoents/TimeLine";
 
 function FileBar() {
   const { directory } = useFileBarDataProvider();

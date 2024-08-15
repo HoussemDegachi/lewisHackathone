@@ -9,8 +9,7 @@ import MovingCodeItem from "./MovingCodeItem.jsx";
 
 function EditorBox({ data }) {
   const { toast } = useToast();
-  const { setErrors, errors, code, setCode, removeLine, pushLine } =
-    useEditorDataProvider();
+  const { setErrors, errors, code, setCode, removeLine, pushLine } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
