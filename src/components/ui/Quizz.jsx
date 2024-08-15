@@ -4,7 +4,6 @@ import { getRandomNumber } from "@/lib/utils";
 import { Button } from "./button";
 
 function Quizz({ onSuccess, onFailure }) {
-function Quizz({ onSuccess, onFailure }) {
   // get random exercise
   const [quizz, setQuizz] = useState(null);
   const [answer, setAnswer] = useState(null);
