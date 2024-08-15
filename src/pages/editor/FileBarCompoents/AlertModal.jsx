@@ -1,6 +1,4 @@
 import Modal from "@/components/ui/Modal";
-import { X } from "lucide-react";
-import React from "react";
 import { createPortal } from "react-dom";
 
 function AlertModal({ onSubmit }) {

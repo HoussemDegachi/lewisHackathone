@@ -7,32 +7,28 @@ import Modal from "../ui/Modal";
 import Quizz from "../ui/Quizz";
 
 function NavBar() {
-  console.log("re-render");
-
   const [quizState, setQuizState] = useState(false);
   const { fileId } = useParams();
   const file = JSON.parse(localStorage.getItem(fileId));
-  console.log(fileId, file);
-
   const { directory } = useFileBarDataProvider();
 
-  const handleFileDownload = () => {
-    downloadFile(fileId);
-  };
+  const triggerQuiz = (item) => setQuizState(item);
 
-  const handleProjectDownload = () => {
-    downloadFolder(directory);
-  };
+  const closeQuiz = () => setQuizState(false);
 
-  const triggerQuiz = () => {
-    setQuizState(true);
+  const handleDownload = (setBinary) => {
+    if (quizState === "file") downloadFile(fileId, setBinary);
+    else if (quizState === "folder") downloadFolder(directory, setBinary);
   };
 
   return (
     <>
       {quizState && (
-        <Modal>
-          <Quizz />
+        <Modal onClose={closeQuiz}>
+          <Quizz
+            onSuccess={() => handleDownload(false)}
+            onFailure={() => handleDownload(true)}
+          />
         </Modal>
       )}
       <div className="bg-gray-950 w-full h-16 border-gray-600 border-b-2 flex items-center justify-between text-white p-2">
@@ -43,7 +39,7 @@ function NavBar() {
         <div className="mr-5 flex items-center gap-2">
           {file && (
             <button
-              onClick={triggerQuiz}
+              onClick={() => triggerQuiz("file")}
               className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
             >
               <FileDown size={22} />
@@ -55,7 +51,7 @@ function NavBar() {
             </button>
           )}
           <button
-            onClick={triggerQuiz}
+            onClick={() => triggerQuiz("folder")}
             className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
           >
             <FolderDown size={22} />
