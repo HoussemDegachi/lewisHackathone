@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Braces, FileDown, FolderDown } from "lucide-react";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
-import { saveAs } from "file-saver";
 import { downloadFile, downloadFolder } from "@/lib/downloadOps";
 
 function NavBar() {
