@@ -1,18 +1,21 @@
-
 import React from "react";
 import FileList from "./FileBarCompoents/FileList";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 import SavePageButton from "@/components/ui/saveButton";
-
+import Timeline from "@/components/ui/Timeline";
 function FileBar() {
   const { directory } = useFileBarDataProvider();
+  // console.dir(directory);
 
   return (
-    <div className="w-full h-full flex flex-col text-white bg-slate-900">
-      <h2 className="border-gray-700 font-medium border-b-2 p-1.5">EXPLORER</h2>
+    <div className="w-full h-full flex flex-col text-white bg-[#1E1E3F]">
+      <h2 className="text-xs bg-slate-950 bg-opacity-20 pl-3 py-2">EXPLORER</h2>
       <div className="p-1 select-none">
         <FileList file={directory} />
       </div>
+      <SavePageButton />
+
+      <Timeline />
     </div>
   );
 }

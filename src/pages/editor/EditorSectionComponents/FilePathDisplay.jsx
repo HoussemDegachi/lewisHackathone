@@ -7,6 +7,9 @@ import {
 import React, {Fragment} from "react";
 
 function FilePathDisplay({ path }) {
+
+  path = path[0] == "/" ? path.substring(1) : path
+
   return (
       <Breadcrumb className="px-4 py-1 bg-editor">
         <BreadcrumbList>

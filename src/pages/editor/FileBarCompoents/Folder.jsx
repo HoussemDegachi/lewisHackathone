@@ -4,7 +4,7 @@ import FileList from "./FileList";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 
 function Folder({ folder }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { createFile } = useFileBarDataProvider();
 
   const toggleOpen = (e) => {
@@ -33,7 +33,7 @@ function Folder({ folder }) {
           </div>
           <span>{folder.name}</span>
         </div>
-        <div className="mx-1 flex gap-1.5 opacity-0 group-hover:opacity-100 duration-100">
+        <div className="mx-1 flex gap-1 opacity-0 group-hover:opacity-100 duration-100">
           <button>
             <FilePlus2
               size={16}
