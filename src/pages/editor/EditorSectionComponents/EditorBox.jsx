@@ -9,7 +9,7 @@ import MovingCodeItem from "./MovingCodeItem.jsx";
 
 function EditorBox({ data }) {
   const { toast } = useToast();
-  const { setErrors, errors, code, setCode, removeLine, pushLine } = useEditorDataProvider();
+  const { setErrors, errors, code, setCode, removeLine, pushLine, language } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
@@ -135,7 +135,8 @@ function EditorBox({ data }) {
       <Editor
         // className={`${isBroken && "hidden"}`}
         height="100%"
-        defaultLanguage={data.language ? data.language : "javascript"}
+        defaultLanguage={"javascript"}
+        language={language}
         defaultValue={code ? code : ""}
         value={code}
         loading={<LoadingEditor />}

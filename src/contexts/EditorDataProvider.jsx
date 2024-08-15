@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 const initialContext = {
     code: "",
     setCode: () => {},
+    language: "",
+    setLanguage: "",
     errors: [],
     setErrors: () => {},
     getLine: () => {},
@@ -24,9 +26,13 @@ export function EditorDataProvider({ children }) {
   const [fileId, setFileId] = useState(null)
   const [code, setCode] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [language, setLanguage] = useState(null)
 
   useEffect(() => {
-    setCode(fileId && JSON.parse(localStorage.getItem(fileId))?.content)
+    if (!fileId) return
+    const data = JSON.parse(localStorage.getItem(fileId))
+    setCode(data.content)
+    setLanguage(data.language)
   }, [fileId])
 
   useEffect(() => {
@@ -87,7 +93,7 @@ export function EditorDataProvider({ children }) {
   }
 
   return (
-    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine, fileId, setFileId}}>
+    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine, fileId, setFileId, language, setLanguage}}>
       {children}
     </EditorDataContext.Provider>
   )
