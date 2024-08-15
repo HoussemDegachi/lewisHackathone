@@ -43,7 +43,6 @@ function LoadingEditor() {
           })}
         </div>
       </div>
-      <p className="font-bold text-md text-neutral-300">Loading Hell...</p>
     </div>
   );
 }
