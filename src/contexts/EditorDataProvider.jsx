@@ -1,8 +1,10 @@
 import { getRandomNumber } from '@/lib/utils';
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
 
 // initial values for context
+
+const currentYear = new Date().getFullYear()
+
 const initialContext = {
     code: "",
     setCode: () => {},
@@ -15,7 +17,7 @@ const initialContext = {
     removeLine: () => {},
     pushLine: () => {},
     fileId: "",
-    setFileId: () => {}
+    setFileId: () => {},
 }
 
 
@@ -28,11 +30,15 @@ export function EditorDataProvider({ children }) {
   const [errors, setErrors] = useState([]);
   const [language, setLanguage] = useState(null)
 
-  useEffect(() => {
-    if (!fileId) return
+  const importSavedData = () => {
     const data = JSON.parse(localStorage.getItem(fileId))
     setCode(data.content)
     setLanguage(data.language)
+  }
+
+  useEffect(() => {
+    if (!fileId) return
+      importSavedData()
   }, [fileId])
 
   useEffect(() => {

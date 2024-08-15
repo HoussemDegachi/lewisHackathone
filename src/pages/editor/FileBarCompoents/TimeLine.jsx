@@ -1,5 +1,16 @@
+import { Slider } from "@/components/ui/slider";
+import { useEditorDataProvider } from "@/contexts/EditorDataProvider";
 import React from "react";
-const Timeline = () => {
+
+function Timeline() {
+
+  const {setYear, year} = useEditorDataProvider()
+  const currentYear = new Date().getFullYear()
+
+  function handleYearChange(selectedYear) {
+    setYear(selectedYear)
+  }
+
   return (
     <div className="w-full pl-1 py-4 bg-slate-950 bg-opacity-20 h-full">
       <div className="">
@@ -14,8 +25,13 @@ const Timeline = () => {
             <p className="font-light text-gray text-[0.81rem] block ">Timeline</p>
           </summary>
 
-          <div className=" mt-1 pl-3 py-2 space-y-2 text-white *:text-[0.8rem]">
-            {/* here */}
+          <div className=" mt-1 px-3 py-2 space-y-2 text-white *:text-[0.8rem]">
+            {
+              <span className="text-sm">
+                {year == currentYear? "Now" : year}
+              </span>
+              }
+            <Slider step={1} min={1900} max={currentYear} defaultValue={[currentYear]} onValueChange={(newValue) => handleYearChange(newValue[0])}  />
           </div>
         </details>
       </div>
