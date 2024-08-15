@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 function index() {
   return (
-    <main className="h-dvh w-dvw">
+    <main>
       <NavBar />
       <Outlet />
     </main>
