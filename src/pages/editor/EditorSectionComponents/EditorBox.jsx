@@ -6,19 +6,27 @@ import BrokenEditorLine from "./BrokenEditorLine.jsx";
 import { useToast } from "@/components/ui/use-toast.js";
 import { getRandomNumber } from "@/lib/utils.js";
 import MovingCodeItem from "./MovingCodeItem.jsx";
+import gloom from "@/theme/gloom.json";
 
-function EditorBox({ data }) {
+function EditorBox({ data, dataId }) {
   const { toast } = useToast();
   const { setErrors, errors, code, setCode, removeLine, pushLine, language } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
-  // wasBroken gurantess that editor can brake only once before timeouting
   const [wasBroken, setWasBroken] = useState(false);
   const [movingCode, setMovingCode] = useState(null);
   const [solvedLines, setSolvedLines] = useState([]);
   const [lines, setLines] = useState([]);
 
-  // when errors occure in code it changes the errors variable
-  // to new errors
+  // Define the custom "Glitchy Madness" theme
+  const handleEditorDidMount = (monaco) => {
+    monaco.editor.defineTheme("gloom", {
+      inherit: true,
+      base: "vs-dark",
+      ...gloom,
+    });
+  };
+
+  // Handle editor validation and update errors
   function handleEditorValidation(markers) {
     setErrors(markers);
   }
@@ -52,7 +60,7 @@ function EditorBox({ data }) {
   useEffect(() => {
     if (movingCode === null) {
       const nextIn = getRandomNumber(minMoveTime, maxMoveTime);
-      if (timeoutFunc) clearTimeout(timeoutFunc)
+      if (timeoutFunc) clearTimeout(timeoutFunc);
 
       setTimeout(() => {
         setMovingCode("");
@@ -71,14 +79,13 @@ function EditorBox({ data }) {
     setCode(value);
   }
 
-  // responsible for breaking the editor
-  // if it passes x mistakes
+  // Maximum allowed mistakes before breaking the editor
   const maxMistakes = 5;
   useEffect(() => {
     const linesElems = document.querySelectorAll(".view-line");
     if (errors.length >= maxMistakes && !wasBroken && !isBroken) {
       toast({
-        title: "Max number of errors exceded!",
+        title: "Max number of errors exceeded!",
         description: "Catch your code to return it back",
         variant: "destructive",
       });
@@ -106,10 +113,11 @@ function EditorBox({ data }) {
   }
 
   function handleOnRunningClick() {
-    pushLine(movingCode.deletedLine, movingCode.lineNumber)
-    setMovingCode(null)
+    pushLine(movingCode.deletedLine, movingCode.lineNumber);
+    setMovingCode(null);
   }
 
+  // Monitor solved lines to restore the editor once all pieces are clicked
   useEffect(() => {
     if (solvedLines.length == lines.length && isBroken) {
       setIsBroken(false);
@@ -117,13 +125,12 @@ function EditorBox({ data }) {
       setSolvedLines([]);
 
       toast({
-        title: "Hury up!",
-        description: "You have 30s to get below errors limit",
+        title: "Hurry up!",
+        description: "You have 30s to get below the errors limit",
         variant: "destructive",
       });
 
-      // allows editor to break again after 30s
-      // if needed
+      // Allow the editor to break again after 30 seconds if needed
       setTimeout(() => {
         setWasBroken(false);
       }, 30000);
@@ -133,28 +140,40 @@ function EditorBox({ data }) {
   return (
     <div className="h-full bg-editor relative">
       <Editor
-        // className={`${isBroken && "hidden"}`}
+        beforeMount={handleEditorDidMount} // Set up the custom theme before the editor mounts
         height="100%"
         defaultLanguage={"javascript"}
         language={language}
         defaultValue={code ? code : ""}
         value={code}
         loading={<LoadingEditor />}
-        theme="vs-dark"
+        theme="gloom"
         onValidate={handleEditorValidation}
         onChange={handleEditorChange}
-        options={{ readOnly: isBroken }}
+        options={{
+          readOnly: isBroken,
+          fontSize: 14,
+          fontLigatures: true,
+          wordWrap: "on",
+          minimap: {
+            enabled: false,
+          },
+          bracketPairColorization: {
+            enabled: true,
+          },
+          cursorBlinking: "expand",
+          formatOnPaste: true,
+          suggest: {
+            showFields: false,
+            showFunctions: false,
+          },
+        }}
       />
 
       {isBroken && (
         <div className="absolute top-0 right-0 h-full w-full overflow-scroll py-6">
           {lines.map((line, i) => (
-            <BrokenEditorLine
-              text={line.innerText}
-              onClick={() => handleOnBrokenClick(i, line)}
-              className={`${solvedLines.includes(i) && "hidden"}`}
-              key={i}
-            />
+            <BrokenEditorLine text={line.innerText} onClick={() => handleOnBrokenClick(i, line)} className={`${solvedLines.includes(i) && "hidden"}`} key={i} />
           ))}
         </div>
       )}
