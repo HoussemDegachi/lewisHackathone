@@ -19,33 +19,21 @@ function NavBar() {
   };
 
   return (
-    <div className="bg-gray-950 w-full h-16 border-gray-600 border-b-2 flex items-center justify-between text-white p-2">
+    <div className="bg-[#FF8C00] w-full h-16 border-gray-600 border-b-2 flex items-center justify-between text-white p-2">
       <h1 className="text-3xl font-semibold flex items-center gap-2">
         <Braces size={34} strokeWidth={2.5} />
-        Chaos Code Editor
+        Chaotic Code Editor
       </h1>
       <div className="mr-5 flex items-center gap-2">
         {file && (
-          <button
-            onClick={handleFileDownload}
-            className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
-          >
+          <button onClick={handleFileDownload} className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm">
             <FileDown size={22} />
-            {file?.fullName && (
-              <span className="max-w-0 group-hover:max-w-28 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
-                {file.fullName}
-              </span>
-            )}
+            {file?.fullName && <span className="max-w-0 group-hover:max-w-28 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">{file.fullName}</span>}
           </button>
         )}
-        <button
-          onClick={handleProjectDownload}
-          className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
-        >
+        <button onClick={handleProjectDownload} className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm">
           <FolderDown size={22} />
-          <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
-            Project
-          </span>
+          <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">Project</span>
         </button>
       </div>
     </div>
