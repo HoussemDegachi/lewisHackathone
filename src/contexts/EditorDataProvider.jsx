@@ -1,17 +1,23 @@
 import { getRandomNumber } from '@/lib/utils';
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
 
 // initial values for context
+
+const currentYear = new Date().getFullYear()
+
 const initialContext = {
     code: "",
     setCode: () => {},
+    language: "",
+    setLanguage: "",
     errors: [],
     setErrors: () => {},
     getLine: () => {},
     setLine: () => {},
     removeLine: () => {},
-    pushLine: () => {}
+    pushLine: () => {},
+    fileId: "",
+    setFileId: () => {},
 }
 
 
@@ -19,9 +25,23 @@ const EditorDataContext = createContext(initialContext);
 export const useEditorDataProvider = () => useContext(EditorDataContext)
 
 export function EditorDataProvider({ children }) {
-  const { fileId } = useParams();
-  const [code, setCode] = useState(() => (fileId && JSON.parse(localStorage.getItem(fileId))?.content) || null);
+  const [fileId, setFileId] = useState(null)
+  const [code, setCode] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [language, setLanguage] = useState(null)
+
+  const importSavedData = () => {
+    const data = JSON.parse(localStorage.getItem(fileId))
+    if (data) {
+      setCode(data.content)
+      setLanguage(data.language)
+    }
+  }
+
+  useEffect(() => {
+    if (!fileId) return
+      importSavedData()
+  }, [fileId])
 
   useEffect(() => {
     if (code != null) {
@@ -81,7 +101,7 @@ export function EditorDataProvider({ children }) {
   }
 
   return (
-    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine}}>
+    <EditorDataContext.Provider value={{errors, setErrors, code, setCode, getLine, setLine, removeLine, pushLine, fileId, setFileId, language, setLanguage}}>
       {children}
     </EditorDataContext.Provider>
   )

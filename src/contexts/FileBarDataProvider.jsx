@@ -6,6 +6,7 @@ import {
   getFilePathInDir,
   updateFileInDir,
 } from "@/lib/directoryOps";
+import { fileExtensionMap } from "@/lib/utils";
 
 const FileBarDataContext = createContext();
 
@@ -27,7 +28,7 @@ export function FileBarDataProvider({ children }) {
 
   const createFile = (type, folderId) => {
     const newObj = {
-      name: null,
+      name: "",
       type: "rename",
       toBeType: type,
       id: uuid(),
@@ -36,11 +37,13 @@ export function FileBarDataProvider({ children }) {
     if (type === "folder") newObj.contents = [];
 
     if (type === "file") {
+      newObj.extension = "";
+      newObj.language = "text";
       localStorage.setItem(
         newObj.id,
         JSON.stringify({
           content: "",
-          language: "",
+          language: newObj.language,
         })
       );
     }
@@ -49,6 +52,12 @@ export function FileBarDataProvider({ children }) {
   };
 
   const updateFile = (fileId, data) => {
+    if (data.type === "file" && data.extension) {
+      const localData = JSON.parse(localStorage.getItem(fileId));
+      localData.language = fileExtensionMap[data.extension] || data.extension;
+      localData.fullName = `${data.name}.${data.extension}`;
+      localStorage.setItem(fileId, JSON.stringify(localData));
+    }
     setDirectory({ ...updateFileInDir(directory, fileId, data) });
   };
 

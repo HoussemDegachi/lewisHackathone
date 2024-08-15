@@ -53,7 +53,11 @@ export function getFilePathInDir(directory, fileId, path = "") {
   if (directory.type === "folder") {
     if (directory.contents)
       for (const content of directory.contents) {
-        const subPath = getFilePathInDir(content, fileId, `${path}/${directory.name}`);
+        const subPath = getFilePathInDir(
+          content,
+          fileId,
+          `${path}/${directory.name}`
+        );
         if (subPath) return subPath;
       }
   }
