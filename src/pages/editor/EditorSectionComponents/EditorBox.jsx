@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { useMonaco } from "@monaco-editor/react";
 import LoadingEditor from "./LoadingEditor.jsx";
 import { useEditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 import BrokenEditorLine from "./BrokenEditorLine.jsx";
@@ -8,8 +8,9 @@ import { getRandomNumber } from "@/lib/utils.js";
 import MovingCodeItem from "./MovingCodeItem.jsx";
 import gloom from "@/theme/gloom.json";
 
-function EditorBox({ data, dataId }) {
+function EditorBox({ }) {
   const { toast } = useToast();
+  const monaco = useMonaco()
   const { setErrors, errors, code, setCode, removeLine, pushLine, language } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   const [wasBroken, setWasBroken] = useState(false);
@@ -32,10 +33,10 @@ function EditorBox({ data, dataId }) {
   }
 
   // making your line of code
-  // imigrate to other files
+  // escape out of your file
   const minMoveTime = 2 * 60000; // min 2m (in ms)
   const maxMoveTime = 8 * 60000; // max 8m (in ms)
-  const runningTime = 20 * 1000; // runs in screen for 10s (in ms)
+  const runningTime = 20 * 1000; // runs in screen for 20s (in ms)
 
   function tryMoveCode() {
     if (code) {
@@ -142,7 +143,6 @@ function EditorBox({ data, dataId }) {
       <Editor
         beforeMount={handleEditorDidMount} // Set up the custom theme before the editor mounts
         height="100%"
-        defaultLanguage={"javascript"}
         language={language}
         defaultValue={code ? code : ""}
         value={code}
