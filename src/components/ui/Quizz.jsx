@@ -4,6 +4,7 @@ import { getRandomNumber } from "@/lib/utils";
 import { Button } from "./button";
 
 function Quizz({ onSuccess, onFailure }) {
+function Quizz({ onSuccess, onFailure }) {
   // get random exercise
   const [quizz, setQuizz] = useState(null);
   const [answer, setAnswer] = useState(null);
@@ -20,10 +21,12 @@ function Quizz({ onSuccess, onFailure }) {
   }
 
   return (
-    <div className="bg-black py-4 px-6 flex flex-col items-center">
+    <div className="py-4 px-6 flex flex-col items-center">
       {quizz && (
         <>
-          <p className={"text-white text-md mb-10 max-w-[600px] text-center"}>{quizz.question}</p>
+          <p className={"text-white text-md mb-10 max-w-[600px] text-center"}>
+            {quizz.question}
+          </p>
           <div className="flex flex-col items-center w-full">
             {["A", "B", "C", "D"].map((question) => (
               <Button
@@ -31,7 +34,11 @@ function Quizz({ onSuccess, onFailure }) {
                   !answer ? "outline" : (answer !== question) && "destructive"
                 }`}
                 className={`mb-3 text-white max-w-[400px] w-full ${
-                  !answer ? "bg-transparent" : (answer === quizz.answer && answer == question) && "bg-green-500"
+                  !answer
+                    ? "bg-transparent"
+                    : answer === quizz.answer &&
+                      answer == question &&
+                      "bg-green-500"
                 } text-sm`}
                 onClick={() => handleResponse(question)}
                 key={question}
