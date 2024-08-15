@@ -1,21 +1,18 @@
-import { Braces, Download } from "lucide-react";
-import React from "react";
+import { Braces, FileDown, FolderDown } from "lucide-react";
 import { useParams } from "react-router-dom";
 
 function NavBar() {
   const { fileId } = useParams();
   const file = JSON.parse(localStorage.getItem(fileId));
-  console.log(file);
 
-  const handleDownload = () => {
+  const downloadFile = (fileId) => {
+    const file = JSON.parse(localStorage.getItem(fileId));
     if (file && file.language && file.content) {
-      const blob = new Blob([file.content], {
-        type: "text/javascript",
-      });
+      const blob = new Blob([file.content]);
       const url = URL.createObjectURL(blob);
 
       const link = document.createElement("a");
-      link.download = `apple.js`;
+      link.download = file.fullName;
       link.href = url;
       link.click();
     }
@@ -27,13 +24,25 @@ function NavBar() {
         <Braces size={34} strokeWidth={2.5} />
         Chaos Code Editor
       </h1>
-      <button
-        onClick={handleDownload}
-        className="mr-5 text-base capitalize flex items-center gap-1.5 bg-gray-700 py-1 px-3 rounded-md"
-      >
-        <Download />
-        DOWNLOAD
-      </button>
+      <div className="mr-5 flex items-center gap-2">
+        <button
+          onClick={() => downloadFile(fileId)}
+          className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center flex-1 text-base"
+        >
+          <FileDown size={22} />
+          {file?.fullName && (
+            <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
+              {file.fullName}
+            </span>
+          )}
+        </button>
+        <button className="bg-gray-700 py-1.5 px-3  h-10 rounded-md group flex items-center flex-1 text-base">
+          <FolderDown size={22} />
+          <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
+            Project
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
