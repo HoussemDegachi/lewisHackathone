@@ -1,20 +1,20 @@
-import { Braces, FileDown, FolderDown } from "lucide-react";
 import { useParams } from "react-router-dom";
+import { Braces, FileDown, FolderDown } from "lucide-react";
+import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
+import { saveAs } from "file-saver";
 
 function NavBar() {
   const { fileId } = useParams();
   const file = JSON.parse(localStorage.getItem(fileId));
+  console.log(file);
+
+  const { directory } = useFileBarDataProvider();
 
   const downloadFile = (fileId) => {
     const file = JSON.parse(localStorage.getItem(fileId));
     if (file && file.language && file.content) {
       const blob = new Blob([file.content]);
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.download = file.fullName;
-      link.href = url;
-      link.click();
+      saveAs(blob, file.fullName);
     }
   };
 
@@ -27,16 +27,16 @@ function NavBar() {
       <div className="mr-5 flex items-center gap-2">
         <button
           onClick={() => downloadFile(fileId)}
-          className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center flex-1 text-base"
+          className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
         >
           <FileDown size={22} />
           {file?.fullName && (
-            <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
+            <span className="max-w-0 group-hover:max-w-28 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
               {file.fullName}
             </span>
           )}
         </button>
-        <button className="bg-gray-700 py-1.5 px-3  h-10 rounded-md group flex items-center flex-1 text-base">
+        <button className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm">
           <FolderDown size={22} />
           <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
             Project
