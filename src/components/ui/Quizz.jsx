@@ -3,10 +3,10 @@ import quizzes from "@/public/quizz/quizz.json";
 import { getRandomNumber } from "@/lib/utils";
 import { Button } from "./button";
 
-function Quizz({ onSuccess }) {
+function Quizz({ onSuccess, onFailure }) {
   // get random exercise
   const [quizz, setQuizz] = useState(null);
-  const [answers, setAnswers] = useState([]);
+  const [answer, setAnswer] = useState(null);
 
   useEffect(() => {
     const quizzesNumber = quizzes.length;
@@ -15,10 +15,8 @@ function Quizz({ onSuccess }) {
   }, []);
 
   function handleResponse(question) {
-    if (!answers.includes(question)) {
-      setAnswers([...answers, question]);
-      quizz.answer == question && onSuccess();
-    }
+      setAnswer(question);
+      quizz.answer == question ? onSuccess() : onFailure();
   }
 
   return (
@@ -30,12 +28,10 @@ function Quizz({ onSuccess }) {
             {["A", "B", "C", "D"].map((question) => (
               <Button
                 variant={`${
-                  answers.includes(question)
-                    ? !(quizz.answer === question) && "destructive"
-                    : "outline"
+                  !answer ? "outline" : (answer !== question) && "destructive"
                 }`}
                 className={`mb-3 text-white max-w-[400px] w-full ${
-                  !answers.includes(question) ? "bg-transparent" : (quizz.answer === question) && "bg-green-500"
+                  !answer ? "bg-transparent" : (answer === quizz.answer && answer == question) && "bg-green-500"
                 } text-sm`}
                 onClick={() => handleResponse(question)}
                 key={question}

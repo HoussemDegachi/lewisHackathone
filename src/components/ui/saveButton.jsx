@@ -16,7 +16,6 @@ const SavePageButton = () => {
 
   useEffect(() => {
     const button = document.querySelector("#sneaky-btn");
-
     ["mouseover", "click"].forEach(function (type) {
       button.addEventListener(type, function () {
         const top = getRandomNum(window.innerHeight - this.offsetHeight);

@@ -7,7 +7,7 @@ function App() {
 
   return (
     <Router>
-      <NavBar />
+    <NavBar />
       <Toaster />
       <Routes>
         <Route path={'/'} element={<Editor isRoot={true} />} />
