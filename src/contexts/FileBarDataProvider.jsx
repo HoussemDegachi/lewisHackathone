@@ -13,6 +13,7 @@ const FileBarDataContext = createContext();
 export const useFileBarDataProvider = () => useContext(FileBarDataContext);
 
 export function FileBarDataProvider({ children }) {
+  const [newFile, setNewFile] = useState(null);
   const [directory, setDirectory] = useState(
     JSON.parse(localStorage.getItem("directory")) || {
       id: uuid(),
@@ -27,12 +28,14 @@ export function FileBarDataProvider({ children }) {
   }, [directory]);
 
   const createFile = (type, folderId) => {
+    if (newFile) return;
     const newObj = {
       name: "",
       type: "rename",
       toBeType: type,
       id: uuid(),
     };
+    setNewFile(newObj.id);
 
     if (type === "folder") newObj.contents = [];
 
@@ -52,6 +55,7 @@ export function FileBarDataProvider({ children }) {
   };
 
   const updateFile = (fileId, data) => {
+    if (newFile === fileId) setNewFile(null);
     if (data.type === "file" && data.extension) {
       const localData = JSON.parse(localStorage.getItem(fileId));
       localData.language = fileExtensionMap[data.extension] || data.extension;
@@ -62,6 +66,7 @@ export function FileBarDataProvider({ children }) {
   };
 
   const deleteFile = (fileId) => {
+    if (newFile === fileId) setNewFile(null);
     localStorage.removeItem(fileId);
     setDirectory({ ...deleteFileInDir(directory, fileId) });
   };
