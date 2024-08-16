@@ -1,4 +1,4 @@
-# 😈 The Chaotic Editor [(Demo)](https://lewis-hackathone.vercel.app/)
+# 😈 The Chaotic Editor [(Demo)](https://the-chaotic-editor.vercel.app/)
 
 ![Main](https://github.com/user-attachments/assets/ccb6b678-68c6-4f24-bcba-a9eeaec15dc5)
 
@@ -28,3 +28,5 @@ A _functionally dysfunctional_ chaotic single page React code editor that lets u
 - [@HoussemDegachi](https://github.com/HoussemDegachi)
 - [@1nandagopal](https://github.com/1nandagopal)
 - [@ridwanyinus](https://github.com/ridwanyinus)
+
+[website link](https://the-chaotic-editor.vercel.app/)
