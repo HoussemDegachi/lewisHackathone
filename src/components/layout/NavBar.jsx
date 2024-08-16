@@ -42,7 +42,7 @@ function NavBar() {
         </Modal>
       )}
       <div className="bg-gray-900 w-full h-16 border-gray-600 border-b-2 flex items-center justify-between text-white p-2">
-        <h1 className="text-xl font-semibold flex items-center gap-2">
+        <h1 className="text-xl font-semibold flex items-center gap-2 select-none">
           <Braces size={30} strokeWidth={2.5} />
           The Chaotic Editor
         </h1>

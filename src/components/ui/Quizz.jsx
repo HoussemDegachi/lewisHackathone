@@ -15,12 +15,12 @@ function Quizz({ onSuccess, onFailure }) {
   }, []);
 
   function handleResponse(question) {
-      setAnswer(question);
-      quizz.answer == question ? onSuccess() : onFailure();
+    setAnswer(question);
+    quizz.answer == question ? onSuccess() : onFailure();
   }
 
   return (
-    <div className="py-4 px-6 flex flex-col items-center">
+    <div className="py-4 px-6 flex flex-col items-center select-none">
       {quizz && (
         <>
           <p className={"text-white text-md mb-10 max-w-[600px] text-center"}>
@@ -31,13 +31,15 @@ function Quizz({ onSuccess, onFailure }) {
               <Button
                 disabled={!!answer}
                 variant={`${
-                  answer !== question ? "outline" : (answer !== quizz.answer) && "destructive"
+                  answer !== question
+                    ? "outline"
+                    : answer !== quizz.answer && "destructive"
                 }`}
                 className={`mb-3 text-white max-w-[400px] w-full ${
-                  (!answer || question !== answer)
+                  !answer || question !== answer
                     ? "bg-transparent"
                     : answer === quizz.answer &&
-                      (answer == question) &&
+                      answer == question &&
                       "bg-green-500"
                 } text-sm`}
                 onClick={() => handleResponse(question)}
