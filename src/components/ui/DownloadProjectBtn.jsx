@@ -5,12 +5,10 @@ import React, { useEffect } from "react";
 function DownloadProjectBtn({ onClick }) {
   useEffect(() => {
     const button = document.querySelector("#sneaky-folder-btn");
-    ["mouseover", "click"].map((type) => changePosition(button, type));
+    changePosition(button, "mouseover");
 
     return () => {
-      ["mouseover", "click"].map((type) => {
-        button.removeEventListener(type, () => {});
-      });
+      button.removeEventListener("mouseover", () => {});
     };
   }, []);
 
