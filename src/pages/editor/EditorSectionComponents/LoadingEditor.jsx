@@ -39,7 +39,7 @@ function LoadingEditor() {
       <div className="wrapper h-screen w-screen  flex flex-col justify-center items-center">
         <div className="container rotate-45 w-36 grid  grid-cols-3 place-items-center place-content-center gap-1 ">
           {new Array(9).fill().map((arr, idx) => {
-            return <div key={idx} className="box w-6 h-6 bg-[#FF8C00] "></div>;
+            return <div key={idx} className="box w-6 h-6 bg-black-900 "></div>;
           })}
         </div>
         <p className="font-bold text-md text-neutral-300 mt-6">Loading Chaos...</p>
