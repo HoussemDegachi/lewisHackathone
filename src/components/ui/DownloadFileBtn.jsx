@@ -27,6 +27,7 @@ function DownloadFileBtn({ onClick, file }) {
       </button>
     </div>
   );
+
 }
 
 export default DownloadFileBtn;
