@@ -5,23 +5,21 @@ import React, { useEffect } from "react";
 function DownloadProjectBtn({ onClick }) {
   useEffect(() => {
     const button = document.querySelector("#sneaky-folder-btn");
-    ["mouseover", "click"].map((type) => changePosition(button, type));
+    changePosition(button, "mouseover");
 
     return () => {
-      ["mouseover", "click"].map((type) => {
-        button.removeEventListener(type, () => {});
-      });
+      button.removeEventListener("mouseover", () => {});
     };
   }, []);
 
   return (
-    <div id="sneaky-folder-btn" className="absolute w-fit z-50 top-3 right-6">
+    <div id="sneaky-folder-btn" className="absolute z-75 top-3 right-6">
       <button
         onClick={onClick}
-        className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
+        className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex gap-1 items-center text-sm"
       >
         <FolderDown size={22} />
-        <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
+        <span className="max-w-24 whitespace-nowrap overflow-hidden">
           Project
         </span>
       </button>
