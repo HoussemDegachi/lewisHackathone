@@ -26,13 +26,6 @@ function EditorBox({ }) {
     });
   };
 
-  // make editor use installed modules
-  loader.config({
-    paths: {
-      vs: "node_modules/monaco-editor/min/vs"
-    }
-  })
-
   // Handle editor validation and update errors
   function handleEditorValidation(markers) {
     setErrors(Object.keys(markers));
