@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Editor, { useMonaco } from "@monaco-editor/react";
+import Editor, { loader, useMonaco } from "@monaco-editor/react";
 import LoadingEditor from "./LoadingEditor.jsx";
 import { useEditorDataProvider } from "@/contexts/EditorDataProvider.jsx";
 import BrokenEditorLine from "./BrokenEditorLine.jsx";
@@ -10,7 +10,6 @@ import gloom from "@/theme/gloom.json";
 
 function EditorBox({ }) {
   const { toast } = useToast();
-  const monaco = useMonaco()
   const { setErrors, errors, code, setCode, removeLine, pushLine, language } = useEditorDataProvider();
   const [isBroken, setIsBroken] = useState(false);
   const [wasBroken, setWasBroken] = useState(false);
@@ -27,15 +26,22 @@ function EditorBox({ }) {
     });
   };
 
+  // make editor use installed modules
+  loader.config({
+    paths: {
+      vs: "node_modules/monaco-editor/min/vs"
+    }
+  })
+
   // Handle editor validation and update errors
   function handleEditorValidation(markers) {
-    setErrors(markers);
+    setErrors(Object.keys(markers));
   }
 
   // making your line of code
   // escape out of your file
-  const minMoveTime = 30 * 1000; // min 30s (in ms)
-  const maxMoveTime = 90 * 1000; // max 90s (in ms)
+  const minMoveTime = 50 * 1000; // min 50s (in ms)
+  const maxMoveTime = 120 * 1000; // max 120s (in ms)
   const runningTime = 20 * 1000; // runs in screen for 20s (in ms)
 
   function tryMoveCode() {
@@ -49,7 +55,7 @@ function EditorBox({ }) {
       // alert user
       toast({
         title: "Oh no a line of code is escaping!",
-        description: "Catch it now or it will never comeback",
+        description: "Catch it now or it will never come back",
         variant: "destructive",
       });
     } else {
@@ -86,7 +92,7 @@ function EditorBox({ }) {
     const linesElems = document.querySelectorAll(".view-line");
     if (errors.length >= maxMistakes && !wasBroken && !isBroken) {
       toast({
-        title: "Max number of errors exceeded!",
+        title: "Max number of errors (5) exceeded!",
         description: "Catch your code to return it back",
         variant: "destructive",
       });
@@ -127,7 +133,7 @@ function EditorBox({ }) {
 
       toast({
         title: "Hurry up!",
-        description: "You have 30s to get below the errors limit",
+        description: "You have 30s to get below the errors limit (5)",
         variant: "destructive",
       });
 
