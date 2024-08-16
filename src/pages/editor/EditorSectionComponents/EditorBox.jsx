@@ -34,8 +34,8 @@ function EditorBox({ }) {
 
   // making your line of code
   // escape out of your file
-  const minMoveTime = 2 * 60000; // min 2m (in ms)
-  const maxMoveTime = 8 * 60000; // max 8m (in ms)
+  const minMoveTime = 30 * 1000; // min 30s (in ms)
+  const maxMoveTime = 90 * 1000; // max 90s (in ms)
   const runningTime = 20 * 1000; // runs in screen for 20s (in ms)
 
   function tryMoveCode() {

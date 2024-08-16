@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
-import { Braces, FileDown, FolderDown } from "lucide-react";
+import { Braces } from "lucide-react";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
 import { downloadFile, downloadFolder } from "@/lib/downloadOps";
 import { useState } from "react";
 import Modal from "../ui/Modal";
 import Quizz from "../ui/Quizz";
+import DownloadProjectBtn from "../ui/DownloadProjectBtn";
+import DownloadFileBtn from "../ui/DownloadFileBtn";
 
 function NavBar() {
   const [quizState, setQuizState] = useState(false);
@@ -36,29 +38,11 @@ function NavBar() {
         <Braces size={30} strokeWidth={2.5} />
           Chaos Code Editor
         </h1>
-        <div className="mr-5 flex items-center gap-2">
+        <div>
           {file && (
-            <button
-              onClick={() => triggerQuiz("file")}
-              className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
-            >
-              <FileDown size={22} />
-              {file?.fullName && (
-                <span className="max-w-0 group-hover:max-w-28 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
-                  {file.fullName}
-                </span>
-              )}
-            </button>
+            <DownloadFileBtn onClick={() => triggerQuiz("file")} file={file} />
           )}
-          <button
-            onClick={() => triggerQuiz("folder")}
-            className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
-          >
-            <FolderDown size={22} />
-            <span className="max-w-0 group-hover:max-w-20 group-hover:pl-1 whitespace-nowrap overflow-hidden transition-all duration-500">
-              Project
-            </span>
-          </button>
+          <DownloadProjectBtn onClick={() => triggerQuiz("folder")} />
         </div>
       </div>
     </>

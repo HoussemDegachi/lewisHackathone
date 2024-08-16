@@ -29,14 +29,15 @@ function Quizz({ onSuccess, onFailure }) {
           <div className="flex flex-col items-center w-full">
             {["A", "B", "C", "D"].map((question) => (
               <Button
+                disabled={!!answer}
                 variant={`${
-                  !answer ? "outline" : (answer !== question) && "destructive"
+                  answer !== question ? "outline" : (answer !== quizz.answer) && "destructive"
                 }`}
                 className={`mb-3 text-white max-w-[400px] w-full ${
-                  !answer
+                  (!answer || question !== answer)
                     ? "bg-transparent"
                     : answer === quizz.answer &&
-                      answer == question &&
+                      (answer == question) &&
                       "bg-green-500"
                 } text-sm`}
                 onClick={() => handleResponse(question)}
