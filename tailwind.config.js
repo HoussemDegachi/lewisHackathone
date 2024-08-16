@@ -10,6 +10,7 @@ module.exports = {
   prefix: "",
   theme: {
     zIndex: {
+      75: "75",
       100: "100",
     },
     container: {
