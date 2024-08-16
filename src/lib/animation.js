@@ -12,8 +12,11 @@ export function moveElement(element, animeType, pixels) {
 
 export function changePosition(button, type) {
   button.addEventListener(type, function () {
-    const top = getRandomNumber(0, window.innerHeight - this.offsetHeight);
-    const left = getRandomNumber(75, window.innerWidth - this.offsetWidth);
+    const top = getRandomNumber(0, window.innerHeight - this.offsetHeight - 20);
+    const left = getRandomNumber(
+      75,
+      window.innerWidth - this.offsetWidth - 120
+    );
 
     moveElement(this, "left", left);
     moveElement(this, "top", top);
