@@ -13,9 +13,8 @@ function index({ isRoot }) {
     // create a resizable panel with two sides
     <ResizablePanelGroup
       direction="horizontal"
-      className="w-full min-h-[100dvh] max-h-[100dvh]"
+      className="w-full h-full min-h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)]"
     >
-      
       <EditorDataProvider>
         {/* small side is for file bar */}
         <ResizablePanel

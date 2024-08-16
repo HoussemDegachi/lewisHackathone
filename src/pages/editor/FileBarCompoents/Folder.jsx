@@ -26,7 +26,7 @@ function Folder({ folder }) {
 
   return (
     <div onClick={toggleOpen} className="cursor-pointer rounded-sm">
-      <div className="flex items-center justify-between hover:bg-gray-700 group">
+      <div className="flex items-center justify-between hover:bg-gray-700 text-neutral-300 group">
         <div className="flex items-center gap-0.5 whitespace-nowrap overflow-hidden">
           <div className="flex-1">
             {open ? <ChevronDown size={16} /> : <ChevronRight size={16} />}

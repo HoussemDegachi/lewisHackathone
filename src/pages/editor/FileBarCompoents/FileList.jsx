@@ -11,10 +11,11 @@ import File from "./File";
 import Folder from "./Folder";
 import RenameFile from "./RenameFile";
 import { useFileBarDataProvider } from "@/contexts/FileBarDataProvider";
+import { useParams } from "react-router-dom";
 
 function FileList({ file }) {
-  const { updateFile, deleteFile } = useFileBarDataProvider();
-  const { directory } = useFileBarDataProvider();
+  const { updateFile, deleteFile, directory } = useFileBarDataProvider();
+  const { fileId } = useParams()
 
   const handleRename = (e) => {
     updateFile(file.id, {
@@ -29,7 +30,7 @@ function FileList({ file }) {
   };
 
   let item = null;
-  if (file.type === "file") item = <File file={file} />;
+  if (file.type === "file") item = <File file={file} currentFile={fileId} />;
   if (file.type === "folder") item = <Folder folder={file} />;
   if (file.type === "rename") item = <RenameFile item={file} />;
 
