@@ -15,7 +15,7 @@ function DownloadProjectBtn({ onClick }) {
   }, []);
 
   return (
-    <div id="sneaky-folder-btn" className="absolute z-50 top-3 right-6">
+    <div id="sneaky-folder-btn" className="absolute w-fit z-50 top-3 right-6">
       <button
         onClick={onClick}
         className="bg-gray-700 py-1.5 px-3 h-10 rounded-md group flex items-center text-sm"
