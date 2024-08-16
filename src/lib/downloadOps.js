@@ -8,12 +8,16 @@ const text2binary = (text) => {
   return result;
 };
 
+const getFileTextFormat = (isBinary, content) => {
+  return isBinary ? `Your answer was incorrect so we encrypted your file :(\n ${text2binary(content)}` : content;
+}
+
 export const downloadFile = (fileId, isBinary) => {
   const file = JSON.parse(localStorage.getItem(fileId));
   if (file && file.fullName) {
-    let data = isBinary ? text2binary(file.content) : file.content;
+    let data = getFileTextFormat(isBinary, file.content)
     const blob = new Blob([data]);
-    const fileName = `${file.fullName}${isBinary ? ".bin" : ""}`;
+    const fileName = file.fullName;
     saveAs(blob, fileName);
   }
 };
@@ -22,8 +26,8 @@ export const downloadFolder = (root, isBinary) => {
   function createZip(root, folder = new JSZip().folder(root.name)) {
     if (root.type === "file") {
       const file = JSON.parse(localStorage.getItem(root.id));
-      let data = isBinary ? text2binary(file.content) : file.content;
-      const fileName = `${file.fullName}${isBinary ? ".bin" : ""}`;
+      let data = getFileTextFormat(isBinary, file.content)
+      const fileName = file.fullName;
       folder.file(fileName, data);
     }
 
